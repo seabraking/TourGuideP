@@ -73,7 +73,7 @@ public class LocaisRota extends ListActivity {
                 }
                 ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getApplicationContext(), R.layout.spinner_item, locaisSpinner);
                 selectLocal.setAdapter(adapter);
-                //Mudei isto
+
                 //SpinnerRatingbar
 
                 /*
