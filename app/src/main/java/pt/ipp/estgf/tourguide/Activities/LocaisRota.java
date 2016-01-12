@@ -66,14 +66,14 @@ public class LocaisRota extends ListActivity {
                         if (locals.get(i).getId() == mLocaisRota.get(j).getId()) {
                             localEncontrado = true;
                         }
-                    }//como dafuq
-                    // faz o passo 3 xD e 4 e 5PAH
+                    }
+
                     if(!localEncontrado){
                         locaisSpinner.add(locals.get(i).getId() + " - " + locals.get(i).getNome());}
                 }
                 ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getApplicationContext(), R.layout.spinner_item, locaisSpinner);
                 selectLocal.setAdapter(adapter);
-
+                //Mudei isto
                 //SpinnerRatingbar
 
                 /*
