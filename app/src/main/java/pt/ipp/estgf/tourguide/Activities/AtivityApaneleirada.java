@@ -5,3 +5,4 @@ package pt.ipp.estgf.tourguide.Activities;
  */
 public class AtivityApaneleirada{
 }
+
