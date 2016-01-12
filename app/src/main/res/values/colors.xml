@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#c8e8ff</color>
+    <color name="azul">#00aff0</color>
+    <color name="azulescuro">#0066FF</color>
+    <color name="preto">#000000</color>
+    <color name="cinza">#F0F0F0</color>
+    <color name="branco">#FFFFFF</color>
+    <color name="fab_color_1">#ff5252</color>
+    <color name="fab_color_1_muted">#ff8080</color>
+    <color name="fab_color_2">#9c27b0</color>
+    <color name="fab_color_2_muted">#a56ab0</color>
+</resources>

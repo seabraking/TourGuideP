@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/nomeRotaLocais"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/azul"
+        android:textColor="@color/branco"
+        android:textAlignment="center"
+        android:textSize="25dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Locais da rota"
+        android:paddingLeft="@dimen/subtitle_margin"
+        android:textColor="@color/preto"
+        android:textSize="15dp"/>
+
+    <ListView
+
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/branco"
+        android:layout_marginTop="@dimen/list_margin"
+        android:layout_marginLeft="@dimen/subtitle_margin"
+        android:layout_marginRight="@dimen/subtitle_margin"
+        android:layout_marginBottom="@dimen/subtitle_margin">
+
+    </ListView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/botaoAdicionarLocalRota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ADICIONAR LOCAL"
+            android:layout_alignParentBottom="true"
+            android:background="@color/azul"
+            android:textColor="@color/branco"
+            />
+
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

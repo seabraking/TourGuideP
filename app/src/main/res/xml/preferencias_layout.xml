@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Widget">
+        <EditTextPreference
+            android:defaultValue="4"
+            android:dialogTitle="Numero de Locais"
+            android:inputType="number"
+            android:key="pref_nr_locais"
+            android:summary="Locais"
+            android:title="Numero de Locais a amostrar" />
+        <EditTextPreference
+            android:defaultValue="15"
+            android:dialogTitle="Frequencia de Atualização"
+            android:key="pref_nr_locais"
+            android:summary="Frequencia de Atualização"
+            android:title="Numero de minutos até o Widget atualizar." />
+        <ListPreference
+            android:key="pref_categoria"
+            android:title="Escolha uma Categoria">
+        </ListPreference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Global">
+        <EditTextPreference
+            android:defaultValue="4"
+            android:dialogTitle="Raio de Procura"
+            android:inputType="number"
+            android:key="pref_nr_locais"
+            android:summary="Raio"
+            android:title="Raio de Procura de Locais" />
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contentor"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/principaiscategorias"
+        android:textColor="@color/branco"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginLeft="@dimen/subtitle_margin"
+        android:background="@drawable/rounded_corner"
+        android:textStyle="bold" />
+
+
+    <android.support.design.widget.TabLayout
+        android:animateLayoutChanges="true"
+        android:id="@+id/sliding_tabs_categoria"
+        android:layout_width="match_parent"
+
+        android:layout_height="100dp"
+        app:tabMode="scrollable"
+        android:layout_marginTop="@dimen/fab_margin"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/todascategorias"
+        android:textColor="@color/branco"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginLeft="@dimen/subtitle_margin"
+        android:background="@drawable/rounded_corner"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+
+                android:id="@android:id/list"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/branco"
+                android:layout_marginTop="@dimen/list_margin"
+                android:layout_marginLeft="@dimen/subtitle_margin"
+                android:layout_marginRight="@dimen/subtitle_margin"
+                android:layout_marginBottom="@dimen/subtitle_margin"
+                android:divider="@color/branco"></ListView>
+
+
+
+            <TextView
+                android:id="@android:id/empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/lista_vazia"></TextView>
+
+            <Button
+                android:id="@+id/btn_New"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_add"
+                android:layout_marginBottom="20dp"
+                android:layout_alignParentRight="true"
+                android:text="Adicionar"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/branco"
+                android:paddingRight="5dp"
+                android:background="@drawable/rounded_corner"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
+
+
+
+</LinearLayout>
+</LinearLayout>

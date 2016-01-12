@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">TourGuide</string>
+    <string name="app_subname">Encontra-te!</string>
+    <string name="action_settings">Definições</string>
+    <string name="txtCategorias">Categorias</string>
+    <string name="txtLocais">Locais</string>
+    <string name="txtRotas">Rotas</string>
+    <string name="localActual"><b>Localização Actual: Felgueiras, Porto</b></string>
+    <string name="lista_vazia">Não existem categorias</string>
+    <string name="todascategorias">Todas as Categorias</string>
+    <string name="principaiscategorias">Principais Categorias</string>
+    <string name="font_fontFamily_medium">sans-serif-medium</string>
+    <string name="txtrotasnaoexistentes">Nao existem Rotas</string>
+    <string-array name="image_ids">
+        <item>@drawable/ic_add</item>
+        <item>@drawable/ic_add</item>
+        <item>@drawable/ic_add</item>
+        <item>@drawable/ic_add</item>
+
+    </string-array>
+</resources>
