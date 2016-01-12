@@ -105,6 +105,7 @@ public class LocaisRota extends ListActivity {
                         }
                     }
                 });
+                //
                 */
                 builder.setView(view);
                 builder.show();
@@ -113,4 +114,5 @@ public class LocaisRota extends ListActivity {
 
 
     }
+    //aquiii
 }
