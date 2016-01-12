@@ -29,6 +29,7 @@ public class LocaisRota extends ListActivity {
     private SearchableLocalAdapter mAdapter;
     private ArrayList<Local> mLocaisRota = new ArrayList<Local>();
 
+    //O vitor é um pandeleiro
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
