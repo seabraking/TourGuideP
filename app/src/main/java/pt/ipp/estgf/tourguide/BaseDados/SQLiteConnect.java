@@ -43,6 +43,7 @@ public class SQLiteConnect extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO tbl_poi(name,description,latitude,longitude,rating,category_name) VALUES ('Parque da cidade Paredes','ppppp','0.000','0.000','5','Parques')");
         db.execSQL("INSERT INTO tbl_poi(name,description,latitude,longitude,rating,category_name) VALUES ('Parque da cidade Paredes','ppppp','0.000','0.000','5','Parques')");
 
+
         db.execSQL("INSERT INTO tbl_tour(name,description) VALUES ('Rota de Entrega Material','Entrega de material para construcoes de casas')");
         db.execSQL("INSERT INTO tbl_tour(name,description) VALUES ('Rota de Sabado','Saida ao sabado')");
         db.execSQL("INSERT INTO tbl_tour(name,description) VALUES ('Rota da familia','Saida ao domingo')");

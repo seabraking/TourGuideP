@@ -83,6 +83,8 @@ public class GestorRotas implements GestorADT<Rota> {
             String editarCategoriaSQL = "UPDATE tbl_tour SET name ='" + elemento.getNome() +
                     "',description='" + elemento.getDescricaoRota() +
                     "' WHERE id_tour ='" + elemento.getId() + "'";
+
+
             return true;
         } catch (Exception e) {
             return false;
@@ -108,15 +110,20 @@ public class GestorRotas implements GestorADT<Rota> {
 
     /**
      * Adicionar um Local Interesse na Rota a base de dados
-     * @param rota
-     * @param locais
+     * @param idRota
+     * @param idLocal
      * @return retorna o resultado da operacao
      */
-    public boolean adicionarLocalInteresseRota(Rota rota,Local locais) {
+    public boolean adicionarLocalInteresseRota(int idRota,int idLocal,Context context) {
         try {
-            String adicionarRotaSQL = "INSERT INTO tbl_tour_pois(id_tour INTEGER, id_poi INTEGER) VALUES (" +
-                    rota.getId() + "," +
-                    locais.getId()+");";
+            String adicionarLocalRota = "INSERT INTO tbl_tour_pois  VALUES (" +
+                   idRota + "," +
+                    idLocal+");";
+            Toast.makeText(context,adicionarLocalRota,Toast.LENGTH_LONG).show();
+
+            SQLiteConnect db = new SQLiteConnect(context);
+            SQLiteDatabase rotasdb = db.getWritableDatabase();
+            rotasdb.execSQL(adicionarLocalRota);
 
             return true;
         } catch (Exception e) {

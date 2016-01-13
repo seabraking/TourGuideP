@@ -164,7 +164,7 @@ public class LocaisFragment extends ListFragment {
                 final AlertDialog builder = new AlertDialog.Builder(getActivity()).create();
                 //final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 final LayoutInflater inflater = getActivity().getLayoutInflater();
-                View va = View.inflate(mContext, R.layout.layout_edit_local, null);
+                View va = View.inflate(mContext, R.layout.layout_edit_categoria, null);
                 final Button btnAddCat = (Button) va.findViewById(R.id.btn_addCat);
                 final EditText edtNomeCat = (EditText) va.findViewById(R.id.editNomeCategoria);
                 edtNomeCat.setText(c.getNome());

@@ -1,6 +1,9 @@
 package pt.ipp.estgf.tourguide.Fragments;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RatingBar;
@@ -9,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -24,7 +28,7 @@ import pt.ipp.estgf.tourguide.R;
 /**
  * Created by Vitor on 10/12/2015.
  */
-public class FragmentMap  extends SupportMapFragment {
+public class FragmentMap  extends SupportMapFragment{
 
     private GoogleMap mMap;
     Bundle x;
@@ -63,14 +67,17 @@ public class FragmentMap  extends SupportMapFragment {
                 LatLng latLng=new LatLng(Double.parseDouble(local.getCoordenadas().getLatitude().toString()),
                         Double.parseDouble(local.getCoordenadas().getLongitude().toString()));
                 MarkerOptions markerOptions = new MarkerOptions();
-
                 markerOptions.position(latLng);
                 markerOptions.title(local.getNome());
-                markerOptions.snippet("Ordem na Rota: " + (i + 1)+"\nCategoria: "+local.getCategoria()+"\nDescrição: \n" + local.getDescricao()+
-                "Rating: \n"+local.getRating()+"Coordenadas: \n Lat: "+ local.getCoordenadas().getLatitude()+
-                "\n Lon: "+local.getCoordenadas().getLongitude());
+                markerOptions.snippet("Ordem na Rota: " + (i + 1) + "\nCategoria: " + local.getCategoria() + "\nDescrição: \n" + local.getDescricao() +
+                        "Rating: \n" + local.getRating() + "Coordenadas: \n Lat: " + local.getCoordenadas().getLatitude() +
+                        "\n Lon: " + local.getCoordenadas().getLongitude());
                 lineOptions.add(latLng);
-                mMap.addMarker(markerOptions);
+                mMap.addMarker(markerOptions).setAnchor(0.5f,1);
+
+
+
+
 
             }
             Polyline polyline = mMap.addPolyline(lineOptions);
@@ -78,4 +85,6 @@ public class FragmentMap  extends SupportMapFragment {
 
         }
     }
+
+
 }

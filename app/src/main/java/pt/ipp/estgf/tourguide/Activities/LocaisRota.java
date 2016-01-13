@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ import pt.ipp.estgf.tourguide.Adapter.LocalAdapter;
 import pt.ipp.estgf.tourguide.Adapter.SearchableLocalAdapter;
 import pt.ipp.estgf.tourguide.Classes.Categoria;
 import pt.ipp.estgf.tourguide.Classes.Local;
+import pt.ipp.estgf.tourguide.Classes.Rota;
 import pt.ipp.estgf.tourguide.Gestores.GestorLocaisInteresse;
 import pt.ipp.estgf.tourguide.Gestores.GestorRotas;
 import pt.ipp.estgf.tourguide.R;
@@ -37,26 +39,27 @@ public class LocaisRota extends ListActivity {
         setListAdapter(mAdapter);
 
         TextView nomeRota = (TextView) findViewById(R.id.nomeRotaLocais);
-        Button button = (Button) findViewById(R.id.botaoAdicionarLocalRota);
+        Button buttonAdd = (Button) findViewById(R.id.botaoAdicionarLocalRota);
 
         Intent intent = getIntent();
-        int idRota = intent.getExtras().getInt("idRota");
+        final int idRota = intent.getExtras().getInt("idRota");
         nomeRota.setText(intent.getExtras().getString("nomeRota"));
         GestorRotas gestorRotas = new GestorRotas();
         mLocaisRota.addAll(gestorRotas.listarLocaisRota(idRota, getApplicationContext()));
         mAdapter.notifyDataSetChanged();
 
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 final AlertDialog builder = new AlertDialog.Builder(v.getContext()).create();
                 final LayoutInflater inflater = getLayoutInflater();
                 View view = View.inflate(v.getContext(), R.layout.layout_add_local_rota, null);
-                final Button btnAddCLoc = (Button) view.findViewById(R.id.btn_addLocal);
+                final Button btnAddLoc = (Button) view.findViewById(R.id.btn_addLocal);
+                final Button btnCancel = (Button) view.findViewById(R.id.btn_Cancel);
                 final Spinner selectLocal = (Spinner) view.findViewById(R.id.selectLocal);
 
-                ArrayList<Local> locals = new GestorLocaisInteresse().listar(v.getContext());
+                final ArrayList<Local> locals = new GestorLocaisInteresse().listar(v.getContext());
                 ArrayList<String> locaisSpinner = new ArrayList<String>();
 
                 for (int i = 0; i < locals.size(); i++) {
@@ -73,39 +76,51 @@ public class LocaisRota extends ListActivity {
                 ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getApplicationContext(), R.layout.spinner_item, locaisSpinner);
                 selectLocal.setAdapter(adapter);
 
-                //SpinnerRatingbar
 
-                /*
-                btnAddCLoc.setOnClickListener(new View.OnClickListener() {
+
+                btnAddLoc.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
-                        GestorADT<Categoria> gestorCats = new GestorCategorias();
-                        String nomeCat = edtNomeCat.getText().toString();
-                        if (nomeCat.matches("")) {
-                            edtNomeCat.setHint("Nome não pode ser nulo");
-                            edtNomeCat.setHintTextColor(getResources().getColor(android.R.color.holo_red_dark));
-                        } else {
 
-                            Categoria novaCat = new Categoria(edtNomeCat.getText().toString(), "ic_categoria_praia");
+                        String localAdicionar = selectLocal.getSelectedItem().toString();
+                        if (!localAdicionar.matches("")) {
+                            String[] parte = localAdicionar.split(" ");
+                            int idLocal = Integer.parseInt(parte[0]);
+                            GestorRotas gestorRotas = new GestorRotas();
 
-                            if (gestorCats.adicionar(novaCat, mContext)) {
-
+                            if (gestorRotas.adicionarLocalInteresseRota(idRota, idLocal, getApplicationContext())) {
                                 builder.dismiss();
-                                mCategorias.add(novaCat);
+                                //Encontar a posicao do local selecionado atraves do id
+
+
+                                mLocaisRota.add(locals.get(--idLocal));
                                 mAdapter.notifyDataSetChanged();
-                                Toast.makeText(mContext, "Categoria Adicionada!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Adicionado à rota", Toast.LENGTH_SHORT).show();
                             } else {
-                                builder.dismiss();
-                                Toast.makeText(mContext, "Erro Sql!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "ERRO SQLite", Toast.LENGTH_SHORT).show();
+
                             }
 
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Nope", Toast.LENGTH_SHORT).show();
 
                         }
+
+
                     }
                 });
-                //
-                */
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        builder.dismiss();
+
+
+                    }
+                });
+
+
+
                 builder.setView(view);
                 builder.show();
             }
