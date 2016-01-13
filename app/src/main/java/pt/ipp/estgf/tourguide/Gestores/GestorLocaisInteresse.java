@@ -98,6 +98,16 @@ public class GestorLocaisInteresse implements GestorADT<Local> {
         }
     }
 
+
+
+    /**
+     * Romover o LocalInteresse da base de dados
+     *
+     * @param elemento
+     * @return retorna o LocalInteresse removido
+     */
+
+
     @Override
     public Local remover(Local elemento, Context contexto) {
         try {
@@ -114,12 +124,23 @@ public class GestorLocaisInteresse implements GestorADT<Local> {
     }
 
 
-    /**
-     * Romover o LocalInteresse da base de dados
-     *
-     * @param elemento
-     * @return retorna o LocalInteresse removido
-     */
+    public Local getLocalById(int idLocal,Context context){
+
+        String removerCategoriaSQL = "SELECT * FROM tbl_poi WHERE id_poi=" + idLocal + "";
+        SQLiteConnect dbHelper = new SQLiteConnect(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor c = db.rawQuery(removerCategoriaSQL, null);
+
+        c.moveToNext();
+        Coordenadas crd = new Coordenadas(c.getString(3),c.getString(4));
+        Categoria cat = new Categoria(c.getString(6),null);
+        Local local = new Local(c.getInt(0), c.getString(1), c.getString(2), c.getInt(5), crd, cat);
+        c.close();
+        db.close();
+
+        return local;
+
+    }
 
 
 }

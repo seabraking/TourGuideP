@@ -163,29 +163,13 @@ public class LocaisRota extends ListActivity {
                 Toast.makeText(getApplicationContext(), "Local removido!", Toast.LENGTH_SHORT).show();
             }
         });
-        builder.setPositiveButton("Editar", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Informação Local", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                final AlertDialog builder = new AlertDialog.Builder(v).create();
-                //final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                final LayoutInflater inflater = getLayoutInflater();
-                View va = View.inflate(view.getContext(), R.layout.layout_edit_categoria, null);
-                final Button btnAddCat = (Button) va.findViewById(R.id.btn_addCat);
-                final EditText edtNomeCat = (EditText) va.findViewById(R.id.editNomeCategoria);
-                edtNomeCat.setText(c.getNome());
-                btnAddCat.setOnClickListener(new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View v) {
-
-
-                        //iniciar ativity Informacao local
-
-
-                        }
-                });
-                builder.setView(va);
-                builder.show();
+                Intent i = new Intent(getApplicationContext(), InformacaoLocal.class);
+                i.putExtra("idLocal",mLocaisRota.get(pos).getId());
+                startActivity(i);
             }
         });
         builder.setNeutralButton("Nada", new DialogInterface.OnClickListener() {

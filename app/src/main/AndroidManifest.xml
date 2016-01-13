@@ -38,8 +38,9 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".Activities.LocaisRota"></activity>
-        <activity android:name=".Activities.SettingsActivity"></activity>
+        <activity android:name=".Activities.LocaisRota" />
+        <activity android:name=".Activities.SettingsActivity" />
+        <activity android:name=".Activities.InformacaoLocal"></activity>
     </application>
 
 </manifest>

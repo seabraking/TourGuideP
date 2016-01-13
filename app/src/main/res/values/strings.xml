@@ -11,6 +11,7 @@
     <string name="principaiscategorias">Principais Categorias</string>
     <string name="font_fontFamily_medium">sans-serif-medium</string>
     <string name="txtrotasnaoexistentes">Nao existem Rotas</string>
+    <string name="informacaoLocal">Informação do local</string>
     <string-array name="image_ids">
         <item>@drawable/ic_add</item>
         <item>@drawable/ic_add</item>
