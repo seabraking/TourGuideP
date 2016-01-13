@@ -155,17 +155,20 @@ public class GestorRotas implements GestorADT<Rota> {
     /**
      * Romover um LocalInteresse de uma Rota presente na base de dados
      *
-     * @param rota
-     * @param localInteresse
+     * @param idRota
+     * @param idLocal
      * @return retorna o Local Interesse removido
      */
-    public Local removerLocalInteresseRota(Rota rota, Local localInteresse) {
+    public boolean removerLocalInteresseRota(int idRota, int idLocal,Context context) {
         try {
-            String removerLocalInteresseSQL = "DELETE FROM tbl_tour_pois WHERE id_poi='" + localInteresse.getId() + "'";
+            String removerLocalInteresseSQL = "DELETE FROM tbl_tour_pois WHERE id_poi=" + idLocal + " AND id_tour="+idLocal;
+            SQLiteConnect db = new SQLiteConnect(context);
+            SQLiteDatabase rotasdb = db.getWritableDatabase();
+            rotasdb.execSQL(removerLocalInteresseSQL);
 
-            return localInteresse;
+            return true;
         } catch (Exception e) {
-            return null;
+            return false;
         }
     }
 

@@ -2,6 +2,7 @@ package pt.ipp.estgf.tourguide.Activities;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +24,10 @@ import pt.ipp.estgf.tourguide.Adapter.SearchableLocalAdapter;
 import pt.ipp.estgf.tourguide.Classes.Categoria;
 import pt.ipp.estgf.tourguide.Classes.Local;
 import pt.ipp.estgf.tourguide.Classes.Rota;
+import pt.ipp.estgf.tourguide.Gestores.GestorCategorias;
 import pt.ipp.estgf.tourguide.Gestores.GestorLocaisInteresse;
 import pt.ipp.estgf.tourguide.Gestores.GestorRotas;
+import pt.ipp.estgf.tourguide.Interfaces.GestorADT;
 import pt.ipp.estgf.tourguide.R;
 
 public class LocaisRota extends ListActivity {
@@ -71,12 +74,12 @@ public class LocaisRota extends ListActivity {
                         }
                     }
 
-                    if(!localEncontrado){
-                        locaisSpinner.add(locals.get(i).getId() + " - " + locals.get(i).getNome());}
+                    if (!localEncontrado) {
+                        locaisSpinner.add(locals.get(i).getId() + " - " + locals.get(i).getNome());
+                    }
                 }
                 ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getApplicationContext(), R.layout.spinner_item, locaisSpinner);
                 selectLocal.setAdapter(adapter);
-
 
 
                 btnAddLoc.setOnClickListener(new View.OnClickListener() {
@@ -94,12 +97,12 @@ public class LocaisRota extends ListActivity {
                                 builder.dismiss();
                                 //Encontar a posicao do local selecionado atraves do id
 
-                                    for(int i=0;i<locals.size();i++){
-                                        if(locals.get(i).getId()==idLocal){
-                                            mLocaisRota.add(locals.get(i));
-                                            mAdapter.notifyDataSetChanged();
-                                        }
+                                for (int i = 0; i < locals.size(); i++) {
+                                    if (locals.get(i).getId() == idLocal) {
+                                        mLocaisRota.add(locals.get(i));
+                                        mAdapter.notifyDataSetChanged();
                                     }
+                                }
 
 
                                 Toast.makeText(getApplicationContext(), "Adicionado à rota", Toast.LENGTH_SHORT).show();
@@ -126,7 +129,6 @@ public class LocaisRota extends ListActivity {
                 });
 
 
-
                 builder.setView(view);
                 builder.show();
             }
@@ -137,10 +139,65 @@ public class LocaisRota extends ListActivity {
 
 
     @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
+    protected void onListItemClick(ListView l, View v, final int position, long id) {
         super.onListItemClick(l, v, position, id);
+        final View view = v;
+        final Local c = new Local(mLocaisRota.get(position).getId(), mLocaisRota.get(position).getNome(),
+                mLocaisRota.get(position).getDescricao(), mLocaisRota.get(position).getRating(),
+                mLocaisRota.get(position).getCoordenadas(), mLocaisRota.get(position).getCategoria());
+        final int pos = position;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("O que deseja fazer com " + mLocaisRota.get(position).getNome());
+        builder.setTitle("O que fazer?");
+        AlertDialog mDialog = builder.create();
+        builder.setNegativeButton("Remover", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Botao remove
+                GestorRotas gestorRotas = new GestorRotas();
+                Intent intent = getIntent();
+                final int idRota = intent.getExtras().getInt("idRota");
+                gestorRotas.removerLocalInteresseRota(idRota, mLocaisRota.get(pos).getId(), getApplicationContext());
+                mLocaisRota.remove(position);
+                mAdapter.notifyDataSetChanged();
+                Toast.makeText(getApplicationContext(), "Local removido!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setPositiveButton("Editar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                final AlertDialog builder = new AlertDialog.Builder(v).create();
+                //final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                final LayoutInflater inflater = getLayoutInflater();
+                View va = View.inflate(view.getContext(), R.layout.layout_edit_categoria, null);
+                final Button btnAddCat = (Button) va.findViewById(R.id.btn_addCat);
+                final EditText edtNomeCat = (EditText) va.findViewById(R.id.editNomeCategoria);
+                edtNomeCat.setText(c.getNome());
+                btnAddCat.setOnClickListener(new View.OnClickListener() {
 
+                    @Override
+                    public void onClick(View v) {
+
+
+                        //iniciar ativity Informacao local
+
+
+                        }
+                });
+                builder.setView(va);
+                builder.show();
+            }
+        });
+        builder.setNeutralButton("Nada", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Botao ok
+            }
+        });
+
+        builder.show();
 
 
     }
 }
+
