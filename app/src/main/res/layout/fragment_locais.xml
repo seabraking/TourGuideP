@@ -37,23 +37,45 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@android:id/list"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/branco"
-        android:layout_marginTop="@dimen/list_margin"
-        android:layout_marginLeft="@dimen/subtitle_margin"
-        android:layout_marginRight="@dimen/subtitle_margin"
-        android:layout_marginBottom="@dimen/subtitle_margin"
-        android:divider="@color/branco">
-    </ListView>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@android:id/empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Ñ existem Locais"></TextView>
+        <ListView
+
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/branco"
+            android:layout_marginTop="@dimen/list_margin"
+            android:layout_marginLeft="@dimen/subtitle_margin"
+            android:layout_marginRight="@dimen/subtitle_margin"
+            android:layout_marginBottom="@dimen/subtitle_margin"
+            android:divider="@color/branco"></ListView>
+
+
+
+        <TextView
+            android:id="@android:id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/lista_vazia"></TextView>
+
+        <Button
+            android:id="@+id/btn_New"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_add"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentRight="true"
+            android:text="Adicionar"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/branco"
+            android:paddingRight="5dp"
+            android:background="@drawable/rounded_corner"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
 
 
     </LinearLayout>
