@@ -153,7 +153,7 @@ public class CategoriaFragment extends ListFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+/*
         if (requestCode == RESULT_LOAD_IMG && resultCode == Activity.RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -172,7 +172,7 @@ public class CategoriaFragment extends ListFragment {
 
 
 
-        }
+        }*/
     }
 
 

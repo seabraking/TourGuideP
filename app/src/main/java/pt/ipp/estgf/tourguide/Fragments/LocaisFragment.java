@@ -110,7 +110,7 @@ public class LocaisFragment extends ListFragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-               // mAdapter.getFilter().filter("c:" + spinner.toString());
+                // mAdapter.getFilter().filter("c:" + spinner.toString());
             }
 
             @Override
@@ -118,6 +118,49 @@ public class LocaisFragment extends ListFragment {
                 // your code here
             }
 
+        });
+
+        final Button btnAdd = (Button) getView().findViewById(R.id.btn_NewLoc);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final AlertDialog builder = new AlertDialog.Builder(getActivity()).create();
+                //final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                final LayoutInflater inflater = getActivity().getLayoutInflater();
+                View va = View.inflate(mContext, R.layout.layout_add_categoria, null);
+                final Button btnAddCat = (Button) va.findViewById(R.id.btn_addLoc);
+                final EditText edtNomeCat = (EditText) va.findViewById(R.id.editNomeCategoria);
+                btnAddCat.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        /*GestorADT<Categoria> gestorCats = new GestorCategorias();
+                        String nomeCat = edtNomeCat.getText().toString();
+                        if (nomeCat.matches("")) {
+                            edtNomeCat.setHint("Nome não pode ser nulo");
+                            edtNomeCat.setHintTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                        } else {
+
+                            Categoria novaCat = new Categoria(edtNomeCat.getText().toString(), "ic_categoria_praia");
+
+                            if (gestorCats.adicionar(novaCat, mContext)) {
+
+                                builder.dismiss();
+                                mCategorias.add(novaCat);
+                                mAdapter.notifyDataSetChanged();
+                                Toast.makeText(mContext, "Categoria Adicionada!", Toast.LENGTH_LONG).show();
+                            } else {
+                                builder.dismiss();
+                                Toast.makeText(mContext, "Erro Sql!", Toast.LENGTH_LONG).show();
+                            }
+
+
+                        }*/
+                    }
+                });
+                builder.setView(va);
+                builder.show();
+
+            }
         });
     }
 
