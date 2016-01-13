@@ -100,8 +100,19 @@ public class GestorLocaisInteresse implements GestorADT<Local> {
 
     @Override
     public Local remover(Local elemento, Context contexto) {
-        return null;
+        try {
+
+            String removerCategoriaSQL = "DELETE FROM tbl_poi WHERE id_poi='" + elemento.getId() + "'";
+            SQLiteConnect dbHelper = new SQLiteConnect(contexto);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.execSQL(removerCategoriaSQL);
+
+            return elemento;
+        } catch (Exception e) {
+            return null;
+        }
     }
+
 
     /**
      * Romover o LocalInteresse da base de dados
