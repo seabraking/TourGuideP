@@ -33,7 +33,7 @@
             android:background="@color/azul"
             android:layout_alignParentBottom="true" />
         <Button
-            android:id="@+id/btn_addCat"
+            android:id="@+id/btn_addLoc"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
