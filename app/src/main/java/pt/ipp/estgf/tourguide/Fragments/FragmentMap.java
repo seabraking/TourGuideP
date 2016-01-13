@@ -2,11 +2,15 @@ package pt.ipp.estgf.tourguide.Fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -24,9 +28,6 @@ public class FragmentMap  extends SupportMapFragment {
 
     private GoogleMap mMap;
     Bundle x;
-
-
-
 
 
     @Override
@@ -57,16 +58,20 @@ public class FragmentMap  extends SupportMapFragment {
 
 
             for (int i = 0; i < localArrayList.size(); i++) {
-                Local local = (Local) localArrayList.get(i);
 
+                Local local = localArrayList.get(i);
                 LatLng latLng=new LatLng(Double.parseDouble(local.getCoordenadas().getLatitude().toString()),
                         Double.parseDouble(local.getCoordenadas().getLongitude().toString()));
                 MarkerOptions markerOptions = new MarkerOptions();
+
                 markerOptions.position(latLng);
                 markerOptions.title(local.getNome());
-                markerOptions.snippet("Ordem na Rota: " + (i + 1));
+                markerOptions.snippet("Ordem na Rota: " + (i + 1)+"\nCategoria: "+local.getCategoria()+"\nDescrição: \n" + local.getDescricao()+
+                "Rating: \n"+local.getRating()+"Coordenadas: \n Lat: "+ local.getCoordenadas().getLatitude()+
+                "\n Lon: "+local.getCoordenadas().getLongitude());
                 lineOptions.add(latLng);
                 mMap.addMarker(markerOptions);
+
             }
             Polyline polyline = mMap.addPolyline(lineOptions);
 
