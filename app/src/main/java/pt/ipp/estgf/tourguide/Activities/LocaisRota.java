@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -93,9 +94,14 @@ public class LocaisRota extends ListActivity {
                                 builder.dismiss();
                                 //Encontar a posicao do local selecionado atraves do id
 
+                                    for(int i=0;i<locals.size();i++){
+                                        if(locals.get(i).getId()==idLocal){
+                                            mLocaisRota.add(locals.get(i));
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                    }
 
-                                mLocaisRota.add(locals.get(--idLocal));
-                                mAdapter.notifyDataSetChanged();
+
                                 Toast.makeText(getApplicationContext(), "Adicionado à rota", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getApplicationContext(), "ERRO SQLite", Toast.LENGTH_SHORT).show();
@@ -103,7 +109,7 @@ public class LocaisRota extends ListActivity {
                             }
 
                         } else {
-                            Toast.makeText(getApplicationContext(), "Nope", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Nada selecionado", Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -129,4 +135,12 @@ public class LocaisRota extends ListActivity {
 
     }
 
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+
+
+    }
 }

@@ -27,12 +27,12 @@ public class GestorRotas implements GestorADT<Rota> {
      * @return retorna o resultado da operacao
      */
     @Override
-    public boolean adicionar(Rota elemento,Context context) {
+    public boolean adicionar(Rota elemento, Context context) {
         try {
             String adicionarRotaSQL = "INSERT INTO tbl_tour(name" +
                     "VARCHAR(75), description VARCHAR(255)) VALUES (" +
                     elemento.getNome() + "," +
-                    elemento.getDescricaoRota()+");";
+                    elemento.getDescricaoRota() + ");";
 
             return true;
         } catch (Exception e) {
@@ -58,12 +58,12 @@ public class GestorRotas implements GestorADT<Rota> {
 
             if (cRotas != null && cRotas.moveToFirst()) {
                 do {
-                    p.add(new Rota(cRotas.getInt(0),cRotas.getString(1),cRotas.getString(2)));
+                    p.add(new Rota(cRotas.getInt(0), cRotas.getString(1), cRotas.getString(2)));
                 } while (cRotas.moveToNext());
             }
             cRotas.close();
             db.close();
-            return  p;
+            return p;
         } catch (Exception e) {
             return null;
         }
@@ -77,7 +77,7 @@ public class GestorRotas implements GestorADT<Rota> {
      * @return retorna o resultado da operacao
      */
     @Override
-    public boolean editar(Rota elemento,Rota oldElement, Context context) {
+    public boolean editar(Rota elemento, Rota oldElement, Context context) {
 
         try {
             String editarCategoriaSQL = "UPDATE tbl_tour SET name ='" + elemento.getNome() +
@@ -104,22 +104,19 @@ public class GestorRotas implements GestorADT<Rota> {
      */
 
 
-
-
-
-
     /**
      * Adicionar um Local Interesse na Rota a base de dados
+     *
      * @param idRota
      * @param idLocal
      * @return retorna o resultado da operacao
      */
-    public boolean adicionarLocalInteresseRota(int idRota,int idLocal,Context context) {
+    public boolean adicionarLocalInteresseRota(int idRota, int idLocal, Context context) {
         try {
             String adicionarLocalRota = "INSERT INTO tbl_tour_pois  VALUES (" +
-                   idRota + "," +
-                    idLocal+");";
-            Toast.makeText(context,adicionarLocalRota,Toast.LENGTH_LONG).show();
+                    idRota + "," +
+                    idLocal + ");";
+
 
             SQLiteConnect db = new SQLiteConnect(context);
             SQLiteDatabase rotasdb = db.getWritableDatabase();
@@ -134,17 +131,18 @@ public class GestorRotas implements GestorADT<Rota> {
 
     /**
      * Adicionar Locais Interesse numa Rota pertencente a base de dados
+     *
      * @param rota
      * @param locais
      * @return retorna o resultado da operacao
      */
-    public boolean adicionarLocaisInteresseRota(Rota rota,Local[] locais) {
+    public boolean adicionarLocaisInteresseRota(Rota rota, Local[] locais) {
         try {
-            int id= rota.getId();
-            for(int i=0;i<locais.length;i++){
+            int id = rota.getId();
+            for (int i = 0; i < locais.length; i++) {
                 String adicionarRotaSQL = "INSERT INTO tbl_tour_pois(id_tour INTEGER, id_poi INTEGER) VALUES (" +
                         id + "," +
-                        locais[i].getId()+");";
+                        locais[i].getId() + ");";
             }
 
 
@@ -171,10 +169,10 @@ public class GestorRotas implements GestorADT<Rota> {
         }
     }
 
-    public ArrayList<Local> listarLocaisRota(int idrota,Context context) {
+    public ArrayList<Local> listarLocaisRota(int idrota, Context context) {
 
         try {
-            String listarLocaisSQL = "SELECT tbl_poi.id_poi,name,description,latitude,longitude,rating,category_name FROM tbl_poi INNER JOIN tbl_tour_pois ON tbl_poi.id_poi = tbl_tour_pois.id_poi WHERE tbl_tour_pois.id_tour = "+idrota;
+            String listarLocaisSQL = "SELECT tbl_poi.id_poi,name,description,latitude,longitude,rating,category_name FROM tbl_poi INNER JOIN tbl_tour_pois ON tbl_poi.id_poi = tbl_tour_pois.id_poi WHERE tbl_tour_pois.id_tour = " + idrota;
 
 
             SQLiteConnect db = new SQLiteConnect(context);
@@ -196,15 +194,9 @@ public class GestorRotas implements GestorADT<Rota> {
             return p;
 
         } catch (Exception e) {
-    return null;
+            return null;
         }
     }
-
-
-
-
-
-
 
 
 }
