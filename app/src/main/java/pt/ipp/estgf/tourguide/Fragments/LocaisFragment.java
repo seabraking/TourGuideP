@@ -130,7 +130,7 @@ public class LocaisFragment extends ListFragment {
                 if (newText.length() > 0) {
                     // Search
                 } else {
-                    mAdapter.getFilter().filter("");
+                    mAdapter.getFilter().filter("q:");
                 }
                 return false;
             }
