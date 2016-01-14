@@ -2,6 +2,7 @@ package pt.ipp.estgf.tourguide.Fragments;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.util.ArrayList;
 
 import pt.ipp.estgf.tourguide.Classes.Local;
+import pt.ipp.estgf.tourguide.Gestores.GestorCategorias;
+import pt.ipp.estgf.tourguide.Gestores.GestorLocaisInteresse;
 import pt.ipp.estgf.tourguide.Gestores.GestorRotas;
 import pt.ipp.estgf.tourguide.R;
 
@@ -74,6 +77,13 @@ public class FragmentMap  extends SupportMapFragment{
                 markerOptions.snippet("Ordem na Rota: " + (i + 1) + "\nCategoria: " + local.getCategoria() + "\nDescrição: \n" + local.getDescricao() +
                         "Rating: \n" + local.getRating() + "Coordenadas: \n Lat: " + local.getCoordenadas().getLatitude() +
                         "\n Lon: " + local.getCoordenadas().getLongitude());
+                GestorCategorias gestorLocaisInteresse = new GestorCategorias();
+
+                String src = gestorLocaisInteresse.mostrarIconCat(getContext(),local.getCategoria().getNome());
+                int idImgCatLocal = getContext().getResources().getIdentifier(src, "drawable",
+                        getContext().getPackageName());
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(),idImgCatLocal);
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
                 lineOptions.add(latLng);
                 mMap.addMarker(markerOptions);
 
@@ -87,7 +97,7 @@ public class FragmentMap  extends SupportMapFragment{
             LatLng latLngZoom =new LatLng(Double.parseDouble(local.getCoordenadas().getLatitude().toString()),
                     Double.parseDouble(local.getCoordenadas().getLongitude().toString()));
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngZoom, 10));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngZoom, 9));
 
 
         }
