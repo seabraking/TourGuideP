@@ -115,6 +115,8 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
             Double long2 = Double.parseDouble(filteredData.get(position).getCoordenadas().getLongitude());
             DecimalFormat df = new DecimalFormat("#.0");
             holder.distance.setText(" (" + df.format(gpsTracker.distance(lat1,long1,lat2, long2)) + " km)");
+        } else {
+            holder.distance.setText("Impossivel obter distancia.");
         }
 
         return convertView;
@@ -161,8 +163,15 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
             String filterString = constraint.toString().toLowerCase();
 
             FilterResults results = new FilterResults();
+            ArrayList<Local> list;
+            if(filterString.matches("")){
 
-            final ArrayList<Local> list = mList;
+                list = mList;
+
+            } else {
+                list = filteredData;
+            }
+
 
             int count = list.size();
             final ArrayList<Local> nlist = new ArrayList<Local>(count);
@@ -180,8 +189,9 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
                     }
                 }
             } else if(filterString.startsWith("c:")){
+                list = filteredData;
+                count = list.size();
                 String[] str = filterString.split("c:");
-                Toast.makeText(context,str[1], Toast.LENGTH_LONG).show();
                 if(!str.equals(null)) {
                     filterString = str[1];
                     for (int i = 0; i < count; i++) {
@@ -191,6 +201,18 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
                         }
                     }
                 }
+            } else if(filterString.startsWith("r:")){
+                String[] str = filterString.split("r:");
+                if(!str.equals(null)) {
+                    filterString = str[1];
+                    for (int i = 0; i < count; i++) {
+                        filterableString = list.get(i);
+                        if (filterableString.getRating()>(Integer.parseInt(filterString))) {
+                            nlist.add(filterableString);
+                        }
+                    }
+                }
+
             } else {
                 for (int i = 0; i < count; i++) {
                     filterableString = list.get(i);
