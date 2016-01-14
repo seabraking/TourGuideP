@@ -166,10 +166,10 @@ public class LocaisRota extends ListActivity {
         builder.setPositiveButton("Informação Local", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                /*
+
                 Intent i = new Intent(getApplicationContext(), InformacaoLocal.class);
                 i.putExtra("idLocal",mLocaisRota.get(pos).getId());
-                startActivity(i);*/
+                startActivity(i);
             }
         });
         builder.setNeutralButton("Nada", new DialogInterface.OnClickListener() {
