@@ -3,6 +3,7 @@ package pt.ipp.estgf.tourguide.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.Rating;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import pt.ipp.estgf.tourguide.Activities.InformacaoLocal;
 import pt.ipp.estgf.tourguide.Adapter.CategoriaAdapter;
 import pt.ipp.estgf.tourguide.Adapter.LocalAdapter;
 import pt.ipp.estgf.tourguide.Adapter.SearchableLocalAdapter;
@@ -64,19 +66,48 @@ public class LocaisFragment extends ListFragment {
         // Specify the layout to use when the list of choices appears
         final Spinner spinner = (Spinner)getActivity().findViewById(R.id.spinnerCategory);
         ArrayList<Categoria> cats =  new GestorCategorias().listar(mContext);
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(mContext,android.R.layout.simple_dropdown_item_1line, cats);
+        cats.add(0,new Categoria("Categorias",""));
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(mContext,R.layout.spinner_item, cats);
         spinner.setAdapter(adapter);
+        //SpinnerRaio
+        final Spinner spinnerRaio = (Spinner)getActivity().findViewById(R.id.spinnerRaio);
+        ArrayList<String> raioSpinner = new ArrayList<>();
+        raioSpinner.add("Raio");
+        raioSpinner.add("< 2 KM");
+        raioSpinner.add("< 5 KM");
+        raioSpinner.add("< 10 KM");
+        raioSpinner.add("< 15 KM ");
+        raioSpinner.add("< 25 KM");
+        ArrayAdapter<CharSequence> raioAdapter = new ArrayAdapter(mContext,R.layout.spinner_item, raioSpinner);
+        spinnerRaio.setAdapter(raioAdapter);
         //SpinnerRatingbar
-        Spinner spinnerRating = (Spinner)getActivity().findViewById(R.id.spinnerRating);
-        ArrayList<Integer> rats = new ArrayList<>();
-        rats.add(1);
-        rats.add(2);
-        rats.add(3);
-        rats.add(4);
-        rats.add(5);
-        ArrayAdapter<CharSequence> starsadapter = new ArrayAdapter(mContext,android.R.layout.simple_dropdown_item_1line, rats);
+        final Spinner spinnerRating = (Spinner)getActivity().findViewById(R.id.spinnerRating);
+        ArrayList<String> rats = new ArrayList<>();
+        rats.add("Rating");
+        rats.add("> 1");
+        rats.add("> 2");
+        rats.add("> 3");
+        rats.add("> 4");
+        rats.add("> 5");
+        ArrayAdapter<CharSequence> starsadapter = new ArrayAdapter(mContext,R.layout.spinner_item, rats);
         spinnerRating.setAdapter(starsadapter);
         final SearchView txtPesquisa = (SearchView)getActivity().findViewById(R.id.txtPesquisa);
+        txtPesquisa.setQuery("",false);
+/*
+        txtPesquisa.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean queryTextFocused) {
+                if(!queryTextFocused) {
+                    spinnerRating.setVisibility(View.GONE);
+                    spinnerRaio.setVisibility(View.GONE);
+                    spinner.setVisibility(View.GONE);
+                   // txtPesquisa.setQuery("", false);
+                } else {
+                    spinnerRating.setVisibility(View.VISIBLE);
+                }
+            }
+        });*/
+
 
         SearchView.OnCloseListener onClose = new SearchView.OnCloseListener(){
 
@@ -110,6 +141,11 @@ public class LocaisFragment extends ListFragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if(position > 0){
+                    // get spinner value
+                }else{
+                    // show toast select gender
+                }
                 // mAdapter.getFilter().filter("c:" + spinner.toString());
             }
 
@@ -199,51 +235,12 @@ public class LocaisFragment extends ListFragment {
                 Toast.makeText(mContext,"Local removida!", Toast.LENGTH_SHORT).show();
             }
         });
-        builder.setPositiveButton("Editar", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Detalhes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                final AlertDialog builder = new AlertDialog.Builder(getActivity()).create();
-                //final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                final LayoutInflater inflater = getActivity().getLayoutInflater();
-                View va = View.inflate(mContext, R.layout.layout_edit_categoria, null);
-                final Button btnAddCat = (Button) va.findViewById(R.id.btn_addCat);
-                final EditText edtNomeCat = (EditText) va.findViewById(R.id.editNomeCategoria);
-                edtNomeCat.setText(c.getNome());
-                btnAddCat.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        GestorADT<Categoria> gestorCats = new GestorCategorias();
-                        String nomeLoc = edtNomeCat.getText().toString();
-                        if (nomeLoc.matches("")) {
-                            edtNomeCat.setHint("Nome não pode ser nulo");
-                            edtNomeCat.setHintTextColor(getResources().getColor(android.R.color.holo_red_dark));
-                        } else {
-/*
-                            Categoria novoLoc = new Categoria(edtNomeCat.getText().toString(), c.getIcon());
-
-                            if (gestorCats.editar(novoLoc,c, mContext)) {
-
-                                builder.dismiss();
-
-                                mLocais.remove(pos);
-                                mLocais.add(novoLoc);
-
-
-
-                                mAdapter.notifyDataSetChanged();
-                                Toast.makeText(mContext, "Categoria Editada!", Toast.LENGTH_LONG).show();
-                            } else {
-                                builder.dismiss();
-                                Toast.makeText(mContext, "Erro Sql!", Toast.LENGTH_LONG).show();
-                            }
-*/
-
-                        }
-                    }
-                });
-                builder.setView(va);
-                builder.show();
+                Intent i = new Intent(mContext, InformacaoLocal.class);
+                i.putExtra("idLocal",mLocais.get(pos).getId());
+                startActivity(i);
             }
         });
         builder.setNeutralButton("Nada", new DialogInterface.OnClickListener() {
