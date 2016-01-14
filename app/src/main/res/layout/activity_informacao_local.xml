@@ -2,6 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="2">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
     android:orientation="vertical">
 
 
@@ -53,7 +60,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Categoria: "
+            android:text="Categoria "
             android:textColor="@color/azul"
             android:textSize="15dp"
             android:layout_weight="1"/>
@@ -79,7 +86,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Descrição: "
+            android:text="Descrição "
             android:textColor="@color/azul"
             android:textSize="15dp"
             android:layout_weight="1"/>
@@ -111,7 +118,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2"
-        android:layout_marginLeft="@dimen/subtitle_margin">
+     >
 
         <TextView
             android:layout_width="match_parent"
@@ -119,7 +126,8 @@
             android:text="Latitude "
             android:textColor="@color/azul"
             android:textSize="15dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp"/>
 
         <TextView
             android:id="@+id/infLocalLat"
@@ -141,11 +149,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Longitude: "
+            android:text="Longitude "
             android:textColor="@color/azul"
             android:textSize="15dp"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/subtitle_margin"
+            android:layout_marginLeft="16dp"
             />
 
         <TextView
@@ -164,7 +172,8 @@
         android:text="Rating"
         android:textAlignment="center"
         android:textColor="@color/azul"
-        android:textSize="15dp" />
+        android:textSize="15dp"
+        android:layout_marginTop="16dp"/>
     <RatingBar
         android:id="@+id/infLocalRating"
         style="?android:attr/ratingBarStyleIndicator"
@@ -177,6 +186,24 @@
         android:rating="0.0"
         android:stepSize="0.0"
         android:layout_gravity="center"/>
+
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/idInfLocalMapa">
+
+    </FrameLayout>
+
 
 
     <RelativeLayout
@@ -194,6 +221,7 @@
             android:textColor="@color/branco" />
 
     </RelativeLayout>
+    </LinearLayout>
 
 
 </LinearLayout>
