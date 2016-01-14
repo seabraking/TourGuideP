@@ -19,13 +19,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:layout_marginLeft="@dimen/subtitle_margin">
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nome do Local: "
+            android:text="Nome do Local"
             android:textColor="@color/azul"
             android:textSize="15dp"
             android:layout_weight="1"/>
@@ -45,7 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:layout_marginLeft="@dimen/subtitle_margin">
 
         <TextView
             android:layout_width="match_parent"
@@ -70,7 +72,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:layout_marginLeft="@dimen/subtitle_margin">
 
         <TextView
             android:layout_width="match_parent"
@@ -95,10 +98,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Coordenadas: "
+        android:text="Coordenadas "
         android:textColor="@color/preto"
         android:textSize="15dp"
-        android:layout_weight="1"
+
         />
 
 
@@ -106,12 +109,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:layout_marginLeft="@dimen/subtitle_margin">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Latitude: "
+            android:text="Latitude "
             android:textColor="@color/azul"
             android:textSize="15dp"
             android:layout_weight="1"/>
@@ -139,7 +143,9 @@
             android:text="Longitude: "
             android:textColor="@color/azul"
             android:textSize="15dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/subtitle_margin"
+            />
 
         <TextView
             android:id="@+id/infLocalLong"
@@ -160,7 +166,7 @@
         android:textSize="15dp" />
     <RatingBar
         android:id="@+id/infLocalRating"
-        style="?android:attr/ratingBarStyleSmall"
+        style="?android:attr/ratingBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
@@ -168,7 +174,8 @@
         android:max="5"
         android:numStars="5"
         android:rating="0.0"
-        android:stepSize="0.0" />
+        android:stepSize="0.0"
+        android:layout_gravity="center"/>
 
 
     <RelativeLayout
