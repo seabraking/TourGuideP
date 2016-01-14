@@ -10,6 +10,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -31,6 +32,7 @@ import pt.ipp.estgf.tourguide.R;
 public class FragmentMap  extends SupportMapFragment{
 
     private GoogleMap mMap;
+
     Bundle x;
 
 
@@ -73,7 +75,7 @@ public class FragmentMap  extends SupportMapFragment{
                         "Rating: \n" + local.getRating() + "Coordenadas: \n Lat: " + local.getCoordenadas().getLatitude() +
                         "\n Lon: " + local.getCoordenadas().getLongitude());
                 lineOptions.add(latLng);
-                mMap.addMarker(markerOptions).setAnchor(0.5f,1);
+                mMap.addMarker(markerOptions);
 
 
 
@@ -81,6 +83,11 @@ public class FragmentMap  extends SupportMapFragment{
 
             }
             Polyline polyline = mMap.addPolyline(lineOptions);
+            Local local = localArrayList.get(0);
+            LatLng latLngZoom =new LatLng(Double.parseDouble(local.getCoordenadas().getLatitude().toString()),
+                    Double.parseDouble(local.getCoordenadas().getLongitude().toString()));
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngZoom, 10));
 
 
         }

@@ -1,13 +1,19 @@
 package pt.ipp.estgf.tourguide.Activities;
 
+
+
 import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import pt.ipp.estgf.tourguide.Classes.Local;
+import pt.ipp.estgf.tourguide.Fragments.FragmentMap;
+import pt.ipp.estgf.tourguide.Fragments.LocalMapFragment;
 import pt.ipp.estgf.tourguide.Gestores.GestorLocaisInteresse;
 import pt.ipp.estgf.tourguide.Interfaces.GestorADT;
 import pt.ipp.estgf.tourguide.R;
@@ -33,6 +39,8 @@ public class InformacaoLocal extends AppCompatActivity {
         TextView latLocal = (TextView) findViewById(R.id.infLocalLat);
         TextView logLocal = (TextView) findViewById(R.id.infLocalLong);
         RatingBar ratingLocal = (RatingBar) findViewById(R.id.infLocalRating);
+        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.idInfLocalMapa);
+
 
         Local local = gestorLocaisInteresse.getLocalById(idLocal,getApplicationContext());
         nomeLocal.setText(local.getNome());
@@ -43,6 +51,13 @@ public class InformacaoLocal extends AppCompatActivity {
         ratingLocal.setRating(local.getRating());
 
 
+        LocalMapFragment newFragment = new LocalMapFragment();
+        Bundle args = new Bundle();
+        args.putInt("idLocal",idLocal);
+        newFragment.setArguments(args);
+        FragmentTransaction ft =  getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.idInfLocalMapa , newFragment);
+        ft.commit();
 
     }
 }
