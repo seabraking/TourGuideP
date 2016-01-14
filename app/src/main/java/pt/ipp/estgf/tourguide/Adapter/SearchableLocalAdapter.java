@@ -1,6 +1,11 @@
 package pt.ipp.estgf.tourguide.Adapter;
 
 import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +20,16 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import pt.ipp.estgf.tourguide.Activities.MainAtivity;
 import pt.ipp.estgf.tourguide.Classes.Local;
 import pt.ipp.estgf.tourguide.Gestores.GestorCategorias;
 import pt.ipp.estgf.tourguide.R;
+import pt.ipp.estgf.tourguide.Services.GPSTracker;
 
 /**
  * Created by bia on 14/12/2015.
  */
-public class SearchableLocalAdapter extends BaseAdapter implements Filterable {
+public class SearchableLocalAdapter extends BaseAdapter implements Filterable, LocationListener {
 
     private ArrayList<Local> mList = null;
     private ArrayList<Local> filteredData = null;
@@ -70,6 +77,8 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable {
             holder.mRating = (RatingBar)convertView.findViewById(R.id.localRating);
             holder.mCat = (TextView)convertView.findViewById(R.id.localCat);
             holder.mImageCat = (ImageView)convertView.findViewById(R.id.imgCat);
+            holder.distance = (TextView)convertView.findViewById(R.id.distancia);
+
             // Bind the data efficiently with the holder.
 
             convertView.setTag(holder);
@@ -91,7 +100,43 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable {
         holder.mRating.setRating(filteredData.get(position).getRating());
         holder.mCat.setText(filteredData.get(position).getCategoria().getNome());
         holder.mImageCat.setImageResource(id);
+
+        //GPS
+        GPSTracker gpsTracker = new GPSTracker(context, this);
+        String stringLatitude = "", stringLongitude = "", nameOfLocation="";
+
+        if (gpsTracker.canGetLocation()) {
+            stringLatitude = String.valueOf(gpsTracker.getLatitude());
+            stringLongitude = String.valueOf(gpsTracker.getLongitude());
+            Double lat1 = (Double.parseDouble(stringLatitude));
+            Double long1 = Double.parseDouble(stringLongitude);
+            Double lat2 = Double.parseDouble(filteredData.get(position).getCoordenadas().getLatitude());
+            Double long2 = Double.parseDouble(filteredData.get(position).getCoordenadas().getLongitude());
+            holder.distance.setText(String.valueOf(gpsTracker.distance(lat1,long1,lat2,long2)));
+        }
+
         return convertView;
+    }
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 
     static class ViewHolder {
@@ -100,6 +145,7 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable {
         RatingBar mRating;
         TextView mCat;
         ImageView mImageCat;
+        TextView distance;
     }
 
     public Filter getFilter() {
