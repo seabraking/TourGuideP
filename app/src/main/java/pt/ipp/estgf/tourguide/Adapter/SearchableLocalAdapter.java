@@ -169,13 +169,23 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
 
             Local filterableString;
             if(filterString.startsWith("q:")){
-                Toast.makeText(context, filterString, Toast.LENGTH_SHORT).show();
                 String[] str = filterString.split("q:");
                 if(!str.equals(null)) {
                     filterString = str[1];
                     for (int i = 0; i < count; i++) {
                         filterableString = list.get(i);
                         if (filterableString.getNome().toLowerCase().contains(filterString)) {
+                            nlist.add(filterableString);
+                        }
+                    }
+                }
+            } else if(filterString.startsWith("c:")){
+                String[] str = filterString.split("c:");
+                if(!str.equals(null)) {
+                    filterString = str[1];
+                    for (int i = 0; i < count; i++) {
+                        filterableString = list.get(i);
+                        if (filterableString.getCategoria().getNome().toLowerCase().contains(filterString)) {
                             nlist.add(filterableString);
                         }
                     }
