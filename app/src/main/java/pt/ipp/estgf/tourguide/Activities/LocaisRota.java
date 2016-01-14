@@ -163,7 +163,7 @@ public class LocaisRota extends ListActivity {
                 Toast.makeText(getApplicationContext(), "Local removido!", Toast.LENGTH_SHORT).show();
             }
         });
-        builder.setPositiveButton("Informação Local", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Detalhes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
