@@ -39,26 +39,20 @@
             android:textColor="@android:color/black"
             android:textStyle="bold"
             android:textSize="16dp"/>
-            <TextView
-                android:id="@+id/distancia"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/azul"
-                android:textStyle="bold"
-                android:textSize="10dp"/>
+
         </LinearLayout>
 
-
         <TextView
+            android:id="@+id/distancia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/azul"
-            android:id="@+id/distancia2"/>
-
+            android:textStyle="bold"
+            android:textSize="10dp"/>.
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/azul"
+            android:textColor="@android:color/holo_purple"
             android:id="@+id/localCat"/>
 
         <TextView

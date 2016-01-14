@@ -79,7 +79,7 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
             holder.mCat = (TextView)convertView.findViewById(R.id.localCat);
             holder.mImageCat = (ImageView)convertView.findViewById(R.id.imgCat);
             holder.distance = (TextView)convertView.findViewById(R.id.distancia);
-            holder.distance2 = (TextView)convertView.findViewById(R.id.distancia2);
+
             // Bind the data efficiently with the holder.
 
             convertView.setTag(holder);
@@ -114,12 +114,7 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
             Double lat2 = Double.parseDouble(filteredData.get(position).getCoordenadas().getLatitude());
             Double long2 = Double.parseDouble(filteredData.get(position).getCoordenadas().getLongitude());
             DecimalFormat df = new DecimalFormat("#.0");
-            String distanciaKM = df.format(gpsTracker.distance(lat1, long1, lat2, long2));
-            if(distanciaKM.length()<10) {
-                holder.distance.setText(" (" + distanciaKM + " km)");
-            } else {
-                holder.distance2.setText(" (" + distanciaKM + " km)");
-            }
+            holder.distance.setText(" (" + df.format(gpsTracker.distance(lat1,long1,lat2, long2)) + " km)");
         }
 
         return convertView;
@@ -153,7 +148,6 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
         TextView mCat;
         ImageView mImageCat;
         TextView distance;
-        TextView distance2;
     }
 
     public Filter getFilter() {
