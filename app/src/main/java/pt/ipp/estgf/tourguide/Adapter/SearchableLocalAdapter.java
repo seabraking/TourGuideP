@@ -170,7 +170,7 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
             Local filterableString;
             if(filterString.startsWith("q:")){
                 String[] str = filterString.split("q:");
-                filterString = str[0];
+                filterString = str[1];
                 for (int i = 0; i < count; i++) {
                 filterableString = list.get(i);
                 if (filterableString.getNome().toLowerCase().contains(filterString)) {
