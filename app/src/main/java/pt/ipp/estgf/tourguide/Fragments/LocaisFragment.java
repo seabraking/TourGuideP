@@ -92,7 +92,7 @@ public class LocaisFragment extends ListFragment {
         ArrayAdapter<CharSequence> starsadapter = new ArrayAdapter(mContext,R.layout.spinner_item, rats);
         spinnerRating.setAdapter(starsadapter);
         final SearchView txtPesquisa = (SearchView)getActivity().findViewById(R.id.txtPesquisa);
-        txtPesquisa.setQuery("",false);
+        txtPesquisa.setQuery("", false);
 /*
         txtPesquisa.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -108,12 +108,18 @@ public class LocaisFragment extends ListFragment {
             }
         });*/
 
-        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mAdapter.getFilter().filter("c:" + spinner.getSelectedItem().toString());
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
         });
+
 
         SearchView.OnCloseListener onClose = new SearchView.OnCloseListener(){
 
