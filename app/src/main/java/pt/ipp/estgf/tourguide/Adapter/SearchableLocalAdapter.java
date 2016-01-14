@@ -190,6 +190,13 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
                         }
                     }
                 }
+            } else {
+                for (int i = 0; i < count; i++) {
+                    filterableString = list.get(i);
+                    if (filterableString.getNome().toLowerCase().contains(filterString)) {
+                        nlist.add(filterableString);
+                    }
+                }
             }
 
 
