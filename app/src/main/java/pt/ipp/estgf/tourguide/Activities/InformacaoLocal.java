@@ -3,6 +3,7 @@ package pt.ipp.estgf.tourguide.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -17,6 +18,9 @@ public class InformacaoLocal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_informacao_local);
+
+
+        getSupportActionBar().hide();
 
         Intent intent = getIntent();
         int idLocal = intent.getExtras().getInt("idLocal");
