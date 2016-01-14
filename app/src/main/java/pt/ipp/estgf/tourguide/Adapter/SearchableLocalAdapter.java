@@ -18,6 +18,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import pt.ipp.estgf.tourguide.Activities.MainAtivity;
@@ -112,7 +113,9 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
             Double long1 = Double.parseDouble(stringLongitude);
             Double lat2 = Double.parseDouble(filteredData.get(position).getCoordenadas().getLatitude());
             Double long2 = Double.parseDouble(filteredData.get(position).getCoordenadas().getLongitude());
-            holder.distance.setText(String.valueOf(gpsTracker.distance(lat1,long1,lat2,long2)));
+            DecimalFormat df = new DecimalFormat("#.0");
+
+            holder.distance.setText(" (" + df.format(gpsTracker.distance(lat1,long1,lat2,long2)) + ")");
         }
 
         return convertView;
