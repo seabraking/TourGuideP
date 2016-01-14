@@ -25,6 +25,7 @@ public class LocalMapFragment  extends SupportMapFragment {
     Bundle x;
 
 
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
