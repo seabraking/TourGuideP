@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/azul"
+        android:textColor="@color/branco"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        android:text="@string/informacaoLocal"/>
+
+    <TextView
+        android:id="@+id/infLocalNomeLocal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Locais da rota"
+        android:paddingLeft="@dimen/subtitle_margin"
+        android:textColor="@color/preto"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:id="@+id/infLocalCategoria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Locais da rota"
+        android:paddingLeft="@dimen/subtitle_margin"
+        android:textColor="@color/preto"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:id="@+id/infLocalDescricao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Locais da rota"
+        android:paddingLeft="@dimen/subtitle_margin"
+        android:textColor="@color/preto"
+        android:textSize="15dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Coordenadas"
+        android:paddingLeft="@dimen/subtitle_margin"
+        android:textColor="@color/preto"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:id="@+id/infLocalLat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Locais da rota"
+        android:paddingLeft="@dimen/subtitle_margin"
+        android:textColor="@color/preto"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:id="@+id/infLocalLong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Locais da rota"
+        android:paddingLeft="@dimen/subtitle_margin"
+        android:textColor="@color/preto"
+        android:textSize="15dp"/>
+
+    <RatingBar
+        android:id="@+id/infLocalRating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:max="5"
+        android:numStars="5"
+        android:rating="0.0"
+        android:stepSize="0.0" />
+
+
+
+
+
+        <Button
+            android:id="@+id/botaoEditLocal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EDITAR LOCAL"
+            android:layout_alignParentBottom="true"
+            android:background="@color/azul"
+            android:textColor="@color/branco"
+            />
+
+
+
+
+
+</LinearLayout>
