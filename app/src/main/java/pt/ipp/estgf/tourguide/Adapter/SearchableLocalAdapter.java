@@ -115,7 +115,7 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
             Double long2 = Double.parseDouble(filteredData.get(position).getCoordenadas().getLongitude());
             DecimalFormat df = new DecimalFormat("#.0");
 
-            holder.distance.setText(" (" + df.format(gpsTracker.distance(lat1,long1,lat2,long2)) + ")");
+            holder.distance.setText(" (" + df.format(gpsTracker.distance(lat1,long1,lat2,long2)) + " km)");
         }
 
         return convertView;

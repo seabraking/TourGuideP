@@ -127,9 +127,7 @@ public class LocaisFragment extends ListFragment {
                 //final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 final LayoutInflater inflater = getActivity().getLayoutInflater();
                 View va = View.inflate(mContext, R.layout.layout_add_categoria, null);
-                final Button btnAddCat = (Button) va.findViewById(R.id.btn_addLoc);
-                final EditText edtNomeCat = (EditText) va.findViewById(R.id.editNomeCategoria);
-                btnAddCat.setOnClickListener(new View.OnClickListener() {
+                btnAdd.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
