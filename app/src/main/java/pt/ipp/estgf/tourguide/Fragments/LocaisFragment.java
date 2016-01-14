@@ -120,7 +120,7 @@ public class LocaisFragment extends ListFragment {
         SearchView.OnQueryTextListener searchTextWatcher = new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                mAdapter.getFilter().filter(query.toString());
+                mAdapter.getFilter().filter("q: + " + query.toString());
 
                 return true;
             }
