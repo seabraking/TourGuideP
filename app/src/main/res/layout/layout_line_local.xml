@@ -43,15 +43,22 @@
                 android:id="@+id/distancia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/holo_red_light"
+                android:textColor="@color/azul"
                 android:textStyle="bold"
                 android:textSize="10dp"/>
         </LinearLayout>
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/holo_red_light"
+            android:textColor="@color/azul"
+            android:id="@+id/distancia2"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/azul"
             android:id="@+id/localCat"/>
 
         <TextView
