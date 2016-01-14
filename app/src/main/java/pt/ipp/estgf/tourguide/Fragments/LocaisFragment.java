@@ -88,9 +88,9 @@ public class LocaisFragment extends ListFragment {
         rats.add("> 2");
         rats.add("> 3");
         rats.add("> 4");
-        rats.add("> 5");
         ArrayAdapter<CharSequence> starsadapter = new ArrayAdapter(mContext,R.layout.spinner_item, rats);
         spinnerRating.setAdapter(starsadapter);
+
         final SearchView txtPesquisa = (SearchView)getActivity().findViewById(R.id.txtPesquisa);
         txtPesquisa.setQuery("", false);
 /*
@@ -108,10 +108,18 @@ public class LocaisFragment extends ListFragment {
             }
         });*/
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerRating.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mAdapter.getFilter().filter("c:" + spinner.getSelectedItem().toString());
+                if(position > 0){
+                    mAdapter.getFilter().filter("r:" + spinnerRating.getSelectedItemPosition());
+                } else {
+                    mAdapter.getFilter().filter("");
+                    spinner.setSelection(0);
+                    spinnerRaio.setSelection(0);
+                    spinnerRating.setSelection(0);
+                }
+
             }
 
             @Override
@@ -121,14 +129,28 @@ public class LocaisFragment extends ListFragment {
         });
 
 
-        SearchView.OnCloseListener onClose = new SearchView.OnCloseListener(){
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0) {
+                    mAdapter.getFilter().filter("");
+                    mAdapter.getFilter().filter("c:" + spinner.getSelectedItem().toString());
+                } else {
+                    mAdapter.getFilter().filter("");
+                    spinner.setSelection(0);
+                    spinner.setSelection(0);
+                    spinnerRating.setSelection(0);
+                }
+
+            }
 
             @Override
-            public boolean onClose() {
-                Toast.makeText(mContext,"EitaPorra",Toast.LENGTH_LONG);
-                return true;
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
-        };
+        });
+
+
         SearchView.OnQueryTextListener searchTextWatcher = new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -140,16 +162,24 @@ public class LocaisFragment extends ListFragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.length() > 0) {
+                    //qd alguem esta a escrever
                     // Search
                 } else {
+
+                    //Quando tudo foi apagado
                     mAdapter.getFilter().filter("");
-                }
+
+                    if(spinner.getSelectedItemPosition()>0){
+                        mAdapter.getFilter().filter("c:");
+                        mAdapter.getFilter().filter("c:" + spinner.getSelectedItem().toString());
+                   }
+                    }
+
                 return false;
             }
         };
         txtPesquisa.setOnQueryTextListener(searchTextWatcher);
-        txtPesquisa.setOnCloseListener(onClose);
-
+/*
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -166,7 +196,7 @@ public class LocaisFragment extends ListFragment {
                 // your code here
             }
 
-        });
+        });*/
 
         final Button btnAdd = (Button) getView().findViewById(R.id.btn_NewLoc);
         btnAdd.setOnClickListener(new View.OnClickListener() {

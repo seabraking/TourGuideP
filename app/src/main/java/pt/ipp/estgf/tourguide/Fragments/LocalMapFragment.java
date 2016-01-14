@@ -37,6 +37,7 @@ public class LocalMapFragment  extends SupportMapFragment {
         x = getArguments();
     }
 
+
     @Override
     public void onStart() {
         super.onStart();
