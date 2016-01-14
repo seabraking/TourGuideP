@@ -2,11 +2,16 @@ package pt.ipp.estgf.tourguide.Activities;
 
 
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -56,8 +61,20 @@ public class InformacaoLocal extends AppCompatActivity {
         args.putInt("idLocal",idLocal);
         newFragment.setArguments(args);
         FragmentTransaction ft =  getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.idInfLocalMapa , newFragment);
+        ft.add(R.id.idInfLocalMapa, newFragment);
         ft.commit();
+
+        Button buttonEditLocal = (Button) findViewById(R.id.botaoEditLocal);
+        buttonEditLocal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog builder = new AlertDialog.Builder(getApplicationContext()).create();
+                final LayoutInflater inflater = getLayoutInflater();
+                View va = View.inflate(getApplicationContext(), R.layout.layout_edit_local, null);
+
+
+            }
+        });
 
     }
 }
