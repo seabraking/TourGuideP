@@ -160,48 +160,69 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
 
+            //Efetuar MultiFiltro aos Locais
+            //Converter CharSequence para String em minusculas - Variavel recebida por Argumento
             String filterString = constraint.toString().toLowerCase();
-
+            //Criar variavel de filtro para os resultados
             FilterResults results = new FilterResults();
+            //A lista a qual filtrar, vai iniciar pela lista completa de locais
             ArrayList<Local> list= mList;
-            /*
-            if(filterString.matches("")){
-
-                list ;
-
-            } else {
-                list = filteredData;
-            }*/
-
-
+            //Definir o tamanho da lista na variavel 'count'
             int count = list.size();
             final ArrayList<Local> nlist = new ArrayList<Local>(count);
 
-            Local filterableString;
+            //Definir variavel Local que vai ser Filtrado posteriormente
+            Local filterableLocal;
+
+            //Verificar se o filtro é uma SearchView com Query pelo Nome do Local
             if(filterString.startsWith("q:")){
-                String[] str = filterString.split("q:");
-                if(!str.equals(null)) {
-                    list= filteredData;
-                    count = list.size();
-                    filterString = str[1];
+                String[] query = filterString.split("q:");
+                //Caso exista a query
+                if(!query[1].equals(null)) {
+                    //Caso exista a query
+                    filterString = query[1];
+                    //Para todos Locais
                     for (int i = 0; i < count; i++) {
-                        filterableString = list.get(i);
-                        if (filterableString.getNome().toLowerCase().contains(filterString)) {
-                            nlist.add(filterableString);
+                        filterableLocal = list.get(i);
+                        if (filterableLocal.getNome().toLowerCase().contains(filterString)) {
+                            nlist.add(filterableLocal);
                         }
                     }
 
                 }
-            } else if(filterString.startsWith("c:")){
-                String[] str = filterString.split("c:");
-                if(!str.equals(null)) {
-                    filterString = str[1];
-                    list= filteredData;
-                    count = list.size();
+                results.values = nlist;
+                results.count = nlist.size();
+
+                return results;
+
+            } else if(filterString.startsWith("qc:")){
+                String[] query = filterString.split("qc:");
+                String[] qrs = query[1].split(":");
+                String catQuery = qrs[0];
+                String textQuery = qrs[1];
+
                     for (int i = 0; i < count; i++) {
-                        filterableString = list.get(i);
-                        if (filterableString.getCategoria().getNome().toLowerCase().contains(filterString.toLowerCase())) {
-                            nlist.add(filterableString);
+                        filterableLocal = list.get(i);
+                        if (filterableLocal.getCategoria().getNome().toLowerCase().contains(catQuery.toLowerCase()) && (filterableLocal.getNome().toLowerCase().contains(textQuery))) {
+                            nlist.add(filterableLocal);
+                        }
+                    }
+
+
+                results.values = nlist;
+                results.count = nlist.size();
+
+                return results;
+
+            }
+            else if(filterString.startsWith("c:")){
+                String[] str = filterString.split("c:");
+                if(!str[1].equals(null)) {
+                    filterString = str[1];
+                    for (int i = 0; i < count; i++) {
+                        filterableLocal = list.get(i);
+                        if (filterableLocal.getCategoria().getNome().toLowerCase().contains(filterString.toLowerCase())) {
+                            nlist.add(filterableLocal);
                         }
                     }
                     results.values = nlist;
@@ -214,12 +235,10 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
                 String[] str = filterString.split("r:");
                 if(!str.equals(null)) {
                     filterString = str[1];
-                    list= filteredData;
-                    count = list.size();
                     for (int i = 0; i < count; i++) {
-                        filterableString = list.get(i);
-                        if (filterableString.getRating()>(Integer.parseInt(filterString))) {
-                            nlist.add(filterableString);
+                        filterableLocal = list.get(i);
+                        if (filterableLocal.getRating()>(Integer.parseInt(filterString))) {
+                            nlist.add(filterableLocal);
                         }
                     }
                 }
@@ -228,12 +247,31 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
 
                 return results;
 
-            } else {
+            } else if(filterString.startsWith("qcr:")){
+                String[] query = filterString.split("qcr:");
+                String[] qrs = query[1].split(":");
+                String catQuery = qrs[0];
+                String textQuery = qrs[1];
+                String ratingQuery = qrs[2];
+
                 for (int i = 0; i < count; i++) {
-                    filterableString = list.get(i);
-                    if (filterableString.getNome().toLowerCase().contains(filterString)) {
-                        nlist.add(filterableString);
+                    filterableLocal = list.get(i);
+                    if (filterableLocal.getCategoria().getNome().toLowerCase().contains(catQuery.toLowerCase()) && (filterableLocal.getNome().toLowerCase().contains(textQuery))
+                            && (filterableLocal.getRating()>Integer.parseInt(ratingQuery))) {
+                        nlist.add(filterableLocal);
                     }
+                }
+
+
+                results.values = nlist;
+                results.count = nlist.size();
+
+                return results;
+            }  else {
+                for (int i = 0; i < count; i++) {
+                    filterableLocal = list.get(i);
+                        nlist.add(filterableLocal);
+
                 }
             }
 

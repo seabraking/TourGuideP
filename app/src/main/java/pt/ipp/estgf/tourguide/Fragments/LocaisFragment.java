@@ -112,12 +112,10 @@ public class LocaisFragment extends ListFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position > 0){
-                    mAdapter.getFilter().filter("r:" + spinnerRating.getSelectedItemPosition());
+                    if(!txtPesquisa.getQuery().equals("")&&(spinner.getSelectedItemPosition()<1))
+                        mAdapter.getFilter().filter("qcr:" + spinner.getSelectedItem().toString() + ":" + txtPesquisa.getQuery().toString() + ":" + spinner.getSelectedItemPosition());
                 } else {
-                    mAdapter.getFilter().filter("");
-                    spinner.setSelection(0);
-                    spinnerRaio.setSelection(0);
-                    spinnerRating.setSelection(0);
+                    mAdapter.getFilter().filter("r:" + spinnerRating.getSelectedItemPosition());
                 }
 
             }
@@ -133,13 +131,16 @@ public class LocaisFragment extends ListFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
-                    mAdapter.getFilter().filter("");
-                    mAdapter.getFilter().filter("c:" + spinner.getSelectedItem().toString());
+                    if(txtPesquisa.getQuery().toString().equals(""))
+                    {
+                        Toast.makeText(getContext(),"txTpesquisa Vazio, Filtrar Cats",Toast.LENGTH_SHORT).show();
+                        mAdapter.getFilter().filter("c:" + spinner.getSelectedItem().toString());
+                    } else {
+                        Toast.makeText(getContext(),"Filtrar Cats + Query",Toast.LENGTH_SHORT).show();
+                        mAdapter.getFilter().filter("qc:" + spinner.getSelectedItem().toString() + ":" + txtPesquisa.getQuery().toString());
+                    }
                 } else {
                     mAdapter.getFilter().filter("");
-                    spinner.setSelection(0);
-                    spinner.setSelection(0);
-                    spinnerRating.setSelection(0);
                 }
 
             }
@@ -154,7 +155,12 @@ public class LocaisFragment extends ListFragment {
         SearchView.OnQueryTextListener searchTextWatcher = new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                mAdapter.getFilter().filter("q:" + query.toString());
+                if(spinner.getSelectedItemPosition()>0)
+                {
+                    mAdapter.getFilter().filter("qc:" + spinner.getSelectedItem().toString() + ":" + txtPesquisa.getQuery().toString());
+                } else {
+                    mAdapter.getFilter().filter("q:" + query.toString());
+                }
 
                 return true;
             }
