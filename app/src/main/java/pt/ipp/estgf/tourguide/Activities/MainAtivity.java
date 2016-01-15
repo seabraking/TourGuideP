@@ -73,27 +73,8 @@ public class MainAtivity extends AppCompatActivity implements LocationListener{
         tabLayout.setSelectedTabIndicatorHeight((int) (4 * getResources().getDisplayMetrics().density));
 
 
-        //LocalActual
-        TextView localActual = (TextView)findViewById(R.id.localActual);
+        checkGPS();
 
-
-        //GPS
-        GPSTracker gpsTracker = new GPSTracker(MainAtivity.this, this);
-        String stringLatitude = "", stringLongitude = "", nameOfLocation="";
-
-        if (gpsTracker.canGetLocation()) {
-            stringLatitude = String.valueOf(gpsTracker.getLatitude());
-            stringLongitude = String.valueOf(gpsTracker.getLongitude());
-            if(isNetworkAvailable()) {
-                nameOfLocation = ConvertPointToLocation(stringLatitude, stringLongitude);
-            } else {
-                nameOfLocation = stringLatitude + ";" + stringLongitude;
-            }
-            localActual.setText(nameOfLocation);
-        } else {
-            localActual.setText("Sinal GPS Impreciso!");
-            gpsTracker.showSettingsAlert();
-        }
 
 
     }
@@ -145,27 +126,49 @@ public class MainAtivity extends AppCompatActivity implements LocationListener{
 
     @Override
     public void onLocationChanged(Location location) {
-        TextView localActual = (TextView)findViewById(R.id.localActual);
-        String stringLatitude = "", stringLongitude = "", nameOfLocation="";
+        checkGPS();
+      //  Toast.makeText(getApplicationContext(),"LocationChanged",Toast.LENGTH_SHORT).show();
 
-        stringLatitude = String.valueOf(location.getLatitude());
-        stringLongitude = String.valueOf(location.getLongitude());
-        if(isNetworkAvailable()){
-            nameOfLocation = ConvertPointToLocation(stringLatitude, stringLongitude);
-        } else {
-            nameOfLocation = stringLatitude + ";" + stringLongitude;
-        }
-
-        localActual.setText(nameOfLocation);
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
+        checkGPS();
+     //   Toast.makeText(getApplicationContext(),"StatusChanged",Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void checkGPS(){
+        //LocalActual
+        TextView localActual = (TextView)findViewById(R.id.localActual);
+        //GPS
+        GPSTracker gpsTracker = new GPSTracker(MainAtivity.this, this);
+        String stringLatitude = "", stringLongitude = "", nameOfLocation="";
+
+        if (gpsTracker.canGetLocation()) {
+            stringLatitude = String.valueOf(gpsTracker.getLatitude());
+            stringLongitude = String.valueOf(gpsTracker.getLongitude());
+            if(isNetworkAvailable()) {
+                nameOfLocation = ConvertPointToLocation(stringLatitude, stringLongitude);
+            } else {
+                nameOfLocation = stringLatitude + ";" + stringLongitude;
+            }
+            localActual.setText(nameOfLocation);
+        } else {
+            localActual.setText("GPS está desativado!");
+            gpsTracker.showSettingsAlert();
+        }
+
 
     }
 
     @Override
     public void onProviderEnabled(String provider) {
+        TextView local = (TextView)findViewById(R.id.localActual);
+        local.setText("Gps Ativado");
+        Toast.makeText(getApplicationContext(),"ProviderEnabled",Toast.LENGTH_SHORT).show();
+        checkGPS();
+
 
     }
 
@@ -173,11 +176,36 @@ public class MainAtivity extends AppCompatActivity implements LocationListener{
     public void onProviderDisabled(String provider) {
         TextView local = (TextView)findViewById(R.id.localActual);
         local.setText("Gps Desativado");
+        Toast.makeText(getApplicationContext(),"Desativado",Toast.LENGTH_SHORT).show();
+
     }
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connec = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connec.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    @Override
+    protected void onResume() {
+        //LocalActual
+        TextView localActual = (TextView)findViewById(R.id.localActual);
+        //GPS
+        GPSTracker gpsTracker = new GPSTracker(MainAtivity.this, this);
+        String stringLatitude = "", stringLongitude = "", nameOfLocation="";
+
+        if (gpsTracker.canGetLocation()) {
+            stringLatitude = String.valueOf(gpsTracker.getLatitude());
+            stringLongitude = String.valueOf(gpsTracker.getLongitude());
+            if(isNetworkAvailable()) {
+                nameOfLocation = ConvertPointToLocation(stringLatitude, stringLongitude);
+            } else {
+                nameOfLocation = stringLatitude + ";" + stringLongitude;
+            }
+            localActual.setText(nameOfLocation);
+        } else {
+            localActual.setText("Sinal GPS Impreciso, aguarde!");
+        }
+        super.onResume();
     }
 }

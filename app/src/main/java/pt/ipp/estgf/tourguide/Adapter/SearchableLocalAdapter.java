@@ -163,14 +163,15 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
             String filterString = constraint.toString().toLowerCase();
 
             FilterResults results = new FilterResults();
-            ArrayList<Local> list;
+            ArrayList<Local> list= mList;
+            /*
             if(filterString.matches("")){
 
-                list = mList;
+                list ;
 
             } else {
                 list = filteredData;
-            }
+            }*/
 
 
             int count = list.size();
@@ -180,6 +181,8 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
             if(filterString.startsWith("q:")){
                 String[] str = filterString.split("q:");
                 if(!str.equals(null)) {
+                    list= filteredData;
+                    count = list.size();
                     filterString = str[1];
                     for (int i = 0; i < count; i++) {
                         filterableString = list.get(i);
@@ -187,24 +190,32 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
                             nlist.add(filterableString);
                         }
                     }
+
                 }
             } else if(filterString.startsWith("c:")){
-                list = filteredData;
-                count = list.size();
                 String[] str = filterString.split("c:");
                 if(!str.equals(null)) {
                     filterString = str[1];
+                    list= filteredData;
+                    count = list.size();
                     for (int i = 0; i < count; i++) {
                         filterableString = list.get(i);
                         if (filterableString.getCategoria().getNome().toLowerCase().contains(filterString.toLowerCase())) {
                             nlist.add(filterableString);
                         }
                     }
+                    results.values = nlist;
+                    results.count = nlist.size();
+
+                    return results;
+
                 }
             } else if(filterString.startsWith("r:")){
                 String[] str = filterString.split("r:");
                 if(!str.equals(null)) {
                     filterString = str[1];
+                    list= filteredData;
+                    count = list.size();
                     for (int i = 0; i < count; i++) {
                         filterableString = list.get(i);
                         if (filterableString.getRating()>(Integer.parseInt(filterString))) {
@@ -212,6 +223,10 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
                         }
                     }
                 }
+                results.values = nlist;
+                results.count = nlist.size();
+
+                return results;
 
             } else {
                 for (int i = 0; i < count; i++) {
@@ -227,6 +242,7 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
             results.count = nlist.size();
 
             return results;
+
         }
 
         @SuppressWarnings("unchecked")

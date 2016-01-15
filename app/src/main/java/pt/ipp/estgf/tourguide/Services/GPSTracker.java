@@ -202,13 +202,14 @@ public class GPSTracker {
 
         // Setting Dialog Message
         alertDialog
-                .setMessage("Por favor ative o GPS para ter acesso completo a app!");
+                .setMessage("Por favor ative o GPS e Internet para ter acesso completo a app!");
 
         // On Pressing Setting button
         alertDialog.setPositiveButton("Definições",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         Intent intent = new Intent(
                                 Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                         mContext.startActivity(intent);
