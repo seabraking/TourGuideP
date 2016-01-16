@@ -37,7 +37,9 @@ public class GestorLocaisInteresse implements GestorADT<Local> {
                     elemento.getCoordenadas().getLongitude()+"," +
                     elemento.getRating()+"," +
                     elemento.getCategoria().getNome()+");";
-
+            SQLiteConnect dbHelper = new SQLiteConnect(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.execSQL(adicionarLocalInteresseSQL);
             return true;
         } catch (Exception e) {
             return false;

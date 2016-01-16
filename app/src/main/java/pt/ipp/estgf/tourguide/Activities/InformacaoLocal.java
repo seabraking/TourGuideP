@@ -81,7 +81,7 @@ public class InformacaoLocal extends AppCompatActivity {
                 final LayoutInflater inflater = getLayoutInflater();
                 View va = View.inflate(InformacaoLocal.this, R.layout.layout_edit_local, null);
 
-                Button btnEditLocal = (Button) va.findViewById(R.id.btn_addLoc);
+                Button btnEditLocal = (Button) va.findViewById(R.id.btn_editLoc);
                 Button btnCancelEditLocal = (Button) va.findViewById(R.id.btn_editCancel);
                 final EditText edtNomeCat = (EditText) va.findViewById(R.id.editNomeLocal);
                 final EditText edtDescLocal = (EditText) va.findViewById(R.id.editDescricaoLocal);
@@ -112,6 +112,7 @@ public class InformacaoLocal extends AppCompatActivity {
 
                 ArrayAdapter<CharSequence> adapter = new ArrayAdapter(InformacaoLocal.this, R.layout.spinner_item, categorias);
                 edtCategoriaSpinner.setAdapter(adapter);
+                edtCategoriaSpinner.setSelection(adapter.getPosition(local.getCategoria().getNome()));
 
                 //obter coordenadas no mapa
                 obterCoordenadasMapa.setOnClickListener(new View.OnClickListener() {

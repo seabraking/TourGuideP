@@ -147,7 +147,7 @@
             android:textColor="@color/branco" />
 
         <Button
-            android:id="@+id/btn_addLoc"
+            android:id="@+id/btn_editLoc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
