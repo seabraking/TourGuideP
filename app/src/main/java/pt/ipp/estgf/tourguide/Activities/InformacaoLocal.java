@@ -32,6 +32,7 @@ import pt.ipp.estgf.tourguide.R;
 
 public class InformacaoLocal extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,18 +84,19 @@ public class InformacaoLocal extends AppCompatActivity {
                 Button btnCancelEditLocal = (Button) va.findViewById(R.id.btn_addLoc);
                 EditText edtNomeCat = (EditText) va.findViewById(R.id.editNomeLocal);
                 EditText edtDescLocal = (EditText) va.findViewById(R.id.editDescricaoLocal);
-                RatingBar edtRatLocal = (RatingBar) va.findViewById(R.id.editLocalRating);
+                Spinner edtRatLocal = (Spinner) va.findViewById(R.id.spinnerSelectRating);
                 EditText edtLatitude = (EditText) va.findViewById(R.id.editLatitudeLocal);
                 EditText edtLongitude = (EditText) va.findViewById(R.id.editLongitudeLocal);
                 Spinner edtCategoriaSpinner = (Spinner) va.findViewById(R.id.spinnerSelectCategoria);
 
                 edtNomeCat.setText(local.getNome());
                 edtDescLocal.setText(local.getDescricao());
-                edtRatLocal.setRating(local.getRating());
-                //RATING BAR!!!!!!
 
-
-
+                //RATING BAR
+                Integer[] ratings = new Integer[]{1,2,3,4,5};
+                ArrayAdapter<Integer> ratingOptions = new ArrayAdapter(InformacaoLocal.this, R.layout.spinner_item, ratings);
+                edtRatLocal.setAdapter(ratingOptions);
+                edtRatLocal.setSelection(ratingOptions.getPosition(local.getRating()));
 
                 edtLatitude.setText(local.getCoordenadas().getLatitude());
                 edtLongitude.setText(local.getCoordenadas().getLongitude());
@@ -124,4 +126,6 @@ public class InformacaoLocal extends AppCompatActivity {
         });
 
     }
+
+
 }
