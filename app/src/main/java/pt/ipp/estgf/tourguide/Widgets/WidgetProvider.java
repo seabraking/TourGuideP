@@ -6,23 +6,53 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import java.text.DecimalFormat;
+
 import pt.ipp.estgf.tourguide.Activities.MainAtivity;
+import pt.ipp.estgf.tourguide.Classes.GPSTracker;
 import pt.ipp.estgf.tourguide.R;
 
 /**
  * Created by bia on 16/01/2016.
  */
 
-public class WidgetProvider extends AppWidgetProvider {
+public class WidgetProvider extends AppWidgetProvider implements LocationListener {
     public static String EXTRA_WORD = "WORD";
     public static String UPDATE_LIST = "UPDATE_LIST";
+    private static String lat ="";
+    private static String longitude="";
+    Context c;
+
+    public static String getLat() {
+        return lat;
+    }
+
+    public static String getLong() {
+        return longitude;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-
+        c = context;
+        GPSTracker gpsTracker = new GPSTracker(context,this);
+        if (gpsTracker.canGetLocation()) {
+            lat = String.valueOf((gpsTracker.getLatitude()));
+            longitude = String.valueOf((gpsTracker.getLongitude()));
+        }
         Log.e("app widget id - ", appWidgetIds.length + "");
         for (int i = 0; i < appWidgetIds.length; i++) {
             Intent svcIntent = new Intent(context, WidgetService.class);
@@ -61,5 +91,41 @@ public class WidgetProvider extends AppWidgetProvider {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int appWidgetIds[] = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.words);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        GPSTracker gpsTracker = new GPSTracker(c,this);
+        if (gpsTracker.canGetLocation()) {
+            lat = String.valueOf((gpsTracker.getLatitude()));
+            longitude = String.valueOf((gpsTracker.getLongitude()));
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        GPSTracker gpsTracker = new GPSTracker(c,this);
+        if (gpsTracker.canGetLocation()) {
+            lat = String.valueOf((gpsTracker.getLatitude()));
+            longitude = String.valueOf((gpsTracker.getLongitude()));
+        }
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        GPSTracker gpsTracker = new GPSTracker(c,this);
+        if (gpsTracker.canGetLocation()) {
+            lat = String.valueOf((gpsTracker.getLatitude()));
+            longitude = String.valueOf((gpsTracker.getLongitude()));
+        }
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+
+            lat = "";
+            longitude = "";
+
     }
 }
