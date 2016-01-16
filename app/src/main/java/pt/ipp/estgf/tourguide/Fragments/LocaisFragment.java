@@ -50,6 +50,8 @@ public class LocaisFragment extends ListFragment {
     private SearchableLocalAdapter mAdapter;
     private ArrayList<Local> mLocais = new ArrayList<Local>();
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -261,7 +263,7 @@ public class LocaisFragment extends ListFragment {
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(ListView l, View v, final int position, long id) {
         super.onListItemClick(l, v, position, id);
         final Local c = new Local(mLocais.get(position).getId(),mLocais.get(position).getNome(),
                 mLocais.get(position).getDescricao(), mLocais.get(position).getRating(),  mLocais.get(position).getCoordenadas(), mLocais.get(position).getCategoria());
@@ -276,9 +278,7 @@ public class LocaisFragment extends ListFragment {
                 //Botao remove
                 GestorADT<Local> gestorLocs = new GestorLocaisInteresse();
                 gestorLocs.remover(c,mContext);
-                mLocais.clear();
-                final GestorLocaisInteresse gestorLocais = new GestorLocaisInteresse();
-                mLocais.addAll(gestorLocais.listar(mContext));
+                mLocais.remove(position);
                 mAdapter.notifyDataSetChanged();
                 Toast.makeText(mContext,"Local removida!", Toast.LENGTH_SHORT).show();
             }
@@ -287,8 +287,9 @@ public class LocaisFragment extends ListFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent i = new Intent(mContext, InformacaoLocal.class);
-                i.putExtra("idLocal",mLocais.get(pos).getId());
+                i.putExtra("idLocal", mLocais.get(pos).getId());
                 startActivity(i);
+
             }
         });
         builder.setNeutralButton("Nada", new DialogInterface.OnClickListener() {
@@ -309,5 +310,9 @@ public class LocaisFragment extends ListFragment {
         //  menu.inflate(R.menu.menu_main_ativity,menu);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
+    }
 }

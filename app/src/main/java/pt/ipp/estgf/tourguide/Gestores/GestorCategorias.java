@@ -166,4 +166,20 @@ public class GestorCategorias implements GestorADT<Categoria> {
         }
     }
 
+    public Categoria getCategoriaByName(String nomeCategoria,Context context){
+
+        String removerCategoriaSQL = "SELECT * FROM tbl_category WHERE category_name='" + nomeCategoria+"'";
+        SQLiteConnect dbHelper = new SQLiteConnect(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor c = db.rawQuery(removerCategoriaSQL, null);
+
+        c.moveToNext();
+        Categoria cat = new Categoria(c.getString(0),c.getString(1));
+        c.close();
+        db.close();
+
+        return cat;
+
+    }
+
 }

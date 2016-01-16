@@ -108,6 +108,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/obterCoordenadasMapa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner"
@@ -119,7 +120,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="Categoria"
-        android:textColor="@color/branco"
+        android:textColor="@color/preto"
         android:textStyle="bold" />
 
     <Spinner
@@ -134,7 +135,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_cancel"
+            android:id="@+id/btn_editCancel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"

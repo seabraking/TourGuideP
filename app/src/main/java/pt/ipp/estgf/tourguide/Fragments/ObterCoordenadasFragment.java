@@ -2,7 +2,13 @@ package pt.ipp.estgf.tourguide.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -11,19 +17,16 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
-
+import pt.ipp.estgf.tourguide.Activities.InformacaoLocal;
 import pt.ipp.estgf.tourguide.Classes.Local;
 import pt.ipp.estgf.tourguide.Gestores.GestorLocaisInteresse;
+import pt.ipp.estgf.tourguide.R;
 
-/**
- * Created by Vitor on 14/01/2016.
- */
-public class LocalMapFragment  extends SupportMapFragment {
 
-    private GoogleMap mMap;
+public class ObterCoordenadasFragment extends SupportMapFragment {
+
+    GoogleMap mMap = getMap();
     Bundle x;
-
 
 
     @Override
@@ -54,16 +57,20 @@ public class LocalMapFragment  extends SupportMapFragment {
 
 
 
-                LatLng latLng=new LatLng(Double.parseDouble(localMap.getCoordenadas().getLatitude().toString()),
-                        Double.parseDouble(localMap.getCoordenadas().getLongitude().toString()));
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLng);
-                markerOptions.title(localMap.getNome());
-                markerOptions.snippet("Categoria: " + localMap.getCategoria() + "\nDescrição: \n" + localMap.getDescricao() +
-                        "Rating: \n" + localMap.getRating() + "Coordenadas: \n Lat: " + localMap.getCoordenadas().getLatitude() +
-                        "\n Lon: " + localMap.getCoordenadas().getLongitude());
-                mMap.addMarker(markerOptions);
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+            LatLng latLng=new LatLng(Double.parseDouble(localMap.getCoordenadas().getLatitude().toString()),
+                    Double.parseDouble(localMap.getCoordenadas().getLongitude().toString()));
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            markerOptions.title(localMap.getNome());
+            markerOptions.snippet("Categoria: " + localMap.getCategoria() + "\nDescrição: \n" + localMap.getDescricao() +
+                    "Rating: \n" + localMap.getRating() + "Coordenadas: \n Lat: " + localMap.getCoordenadas().getLatitude() +
+                    "\n Lon: " + localMap.getCoordenadas().getLongitude());
+            mMap.addMarker(markerOptions);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
         }
+
+
     }
+
+
 }
