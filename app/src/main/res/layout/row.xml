@@ -46,19 +46,6 @@
             android:minHeight="?android:attr/listPreferredItemHeight"
             />
 
-        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/txtDistancia"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/fab_color_1"
-            android:gravity="center_vertical"
-            android:paddingLeft="6dip"
-            android:text="22 km"
-
-            android:minHeight="?android:attr/listPreferredItemHeight"
-            />
 
 
 
