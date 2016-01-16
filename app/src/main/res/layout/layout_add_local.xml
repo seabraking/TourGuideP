@@ -11,7 +11,7 @@
         android:layout_gravity="center_horizontal"
         android:background="@color/azul"
         android:padding="20dp"
-        android:text="Editar Local"
+        android:text="Adicionar Local"
         android:textAlignment="center"
         android:textColor="@color/branco"
         android:textStyle="bold" />
@@ -25,7 +25,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editNomeLocal"
+        android:id="@+id/addNomeLocal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -38,7 +38,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editDescricaoLocal"
+        android:id="@+id/addDescricaoLocal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -80,7 +80,7 @@
             android:textColor="@color/azul" />
 
         <EditText
-            android:id="@+id/editLatitudeLocal"
+            android:id="@+id/addLatitudeLocal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -101,7 +101,7 @@
             android:textColor="@color/azul"/>
 
         <EditText
-            android:id="@+id/editLongitudeLocal"
+            android:id="@+id/addLongitudeLocal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -135,7 +135,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_editCancel"
+            android:id="@+id/btn_addCancel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
@@ -147,7 +147,7 @@
             android:textColor="@color/branco" />
 
         <Button
-            android:id="@+id/btn_editLoc"
+            android:id="@+id/btn_addLoc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
@@ -155,7 +155,7 @@
             android:layout_weight="1"
             android:background="@color/azul"
             android:drawableLeft="@drawable/ic_add"
-            android:text="Editar"
+            android:text="Adicionar Local"
             android:textColor="@color/branco" />
     </LinearLayout>
 </LinearLayout>

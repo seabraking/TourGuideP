@@ -56,11 +56,6 @@ public class RotasFragment extends ListFragment{
             mAdapter.notifyDataSetChanged();
         }
 
-        Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinnerNumeroLocaisRota);
-        Integer[] nums= new Integer[]{1,2,3,4,5,6,7,8,9,10};
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(mContextRota,android.R.layout.simple_dropdown_item_1line,nums);
-        spinner.setAdapter(adapter);
-
 
 
         mAdapter.notifyDataSetChanged();

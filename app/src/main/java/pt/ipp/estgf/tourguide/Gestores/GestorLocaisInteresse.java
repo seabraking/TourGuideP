@@ -37,7 +37,9 @@ public class GestorLocaisInteresse implements GestorADT<Local> {
                     elemento.getCoordenadas().getLongitude()+"," +
                     elemento.getRating()+"," +
                     elemento.getCategoria().getNome()+");";
-
+            SQLiteConnect dbHelper = new SQLiteConnect(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.execSQL(adicionarLocalInteresseSQL);
             return true;
         } catch (Exception e) {
             return false;
@@ -92,6 +94,9 @@ public class GestorLocaisInteresse implements GestorADT<Local> {
                     "',rating='" + elemento.getRating() +
                     "',category_name='" + elemento.getCategoria().getNome() +
                     "' WHERE id_poi ='" + elemento.getId() + "'";
+            SQLiteConnect dbHelper = new SQLiteConnect(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.execSQL(editarCategoriaSQL);
             return true;
         } catch (Exception e) {
             return false;
@@ -112,7 +117,7 @@ public class GestorLocaisInteresse implements GestorADT<Local> {
     public Local remover(Local elemento, Context contexto) {
         try {
 
-            String removerCategoriaSQL = "DELETE FROM tbl_poi WHERE id_poi='" + elemento.getId() + "'";
+            String removerCategoriaSQL = "DELETE FROM tbl_poi WHERE id_poi=" + elemento.getId();
             SQLiteConnect dbHelper = new SQLiteConnect(contexto);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             db.execSQL(removerCategoriaSQL);

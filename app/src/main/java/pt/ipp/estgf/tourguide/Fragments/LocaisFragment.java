@@ -32,10 +32,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import pt.ipp.estgf.tourguide.Activities.InformacaoLocal;
+import pt.ipp.estgf.tourguide.Activities.LocalObterCoordenadas;
 import pt.ipp.estgf.tourguide.Adapter.CategoriaAdapter;
 import pt.ipp.estgf.tourguide.Adapter.LocalAdapter;
 import pt.ipp.estgf.tourguide.Adapter.SearchableLocalAdapter;
 import pt.ipp.estgf.tourguide.Classes.Categoria;
+import pt.ipp.estgf.tourguide.Classes.Coordenadas;
 import pt.ipp.estgf.tourguide.Classes.Local;
 import pt.ipp.estgf.tourguide.Gestores.GestorCategorias;
 import pt.ipp.estgf.tourguide.Gestores.GestorLocaisInteresse;
@@ -50,13 +52,15 @@ public class LocaisFragment extends ListFragment {
     private SearchableLocalAdapter mAdapter;
     private ArrayList<Local> mLocais = new ArrayList<Local>();
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mAdapter = new SearchableLocalAdapter(mContext, mLocais);
         setListAdapter(mAdapter);
@@ -205,45 +209,100 @@ public class LocaisFragment extends ListFragment {
         });*/
 
         final Button btnAdd = (Button) getView().findViewById(R.id.btn_NewLoc);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final AlertDialog builder = new AlertDialog.Builder(getActivity()).create();
-                //final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                final LayoutInflater inflater = getActivity().getLayoutInflater();
-                View va = View.inflate(mContext, R.layout.layout_add_categoria, null);
+
+
                 btnAdd.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
-                        /*GestorADT<Categoria> gestorCats = new GestorCategorias();
-                        String nomeCat = edtNomeCat.getText().toString();
-                        if (nomeCat.matches("")) {
-                            edtNomeCat.setHint("Nome não pode ser nulo");
-                            edtNomeCat.setHintTextColor(getResources().getColor(android.R.color.holo_red_dark));
-                        } else {
 
-                            Categoria novaCat = new Categoria(edtNomeCat.getText().toString(), "ic_categoria_praia");
+                        final AlertDialog builder = new AlertDialog.Builder(mContext).create();
+                        final LayoutInflater inflater = getLayoutInflater(savedInstanceState);
+                        View va = View.inflate(mContext, R.layout.layout_add_local, null);
 
-                            if (gestorCats.adicionar(novaCat, mContext)) {
+                        Button btnAddLocal = (Button) va.findViewById(R.id.btn_addLoc);
+                        Button btnCancelAddLocal = (Button) va.findViewById(R.id.btn_addCancel);
+                        final EditText addNomeCat = (EditText) va.findViewById(R.id.addNomeLocal);
+                        final EditText addDescLocal = (EditText) va.findViewById(R.id.addDescricaoLocal);
+                        final Spinner addRatLocal = (Spinner) va.findViewById(R.id.spinnerSelectRating);
+                        final EditText addLatitude = (EditText) va.findViewById(R.id.addLatitudeLocal);
+                        final EditText addLongitude = (EditText) va.findViewById(R.id.addLongitudeLocal);
+                        final Button obterCoordenadasMapa = (Button) va.findViewById(R.id.obterCoordenadasMapa);
+                        final Spinner addCategoriaSpinner = (Spinner) va.findViewById(R.id.spinnerSelectCategoria);
 
-                                builder.dismiss();
-                                mCategorias.add(novaCat);
-                                mAdapter.notifyDataSetChanged();
-                                Toast.makeText(mContext, "Categoria Adicionada!", Toast.LENGTH_LONG).show();
-                            } else {
-                                builder.dismiss();
-                                Toast.makeText(mContext, "Erro Sql!", Toast.LENGTH_LONG).show();
+                        //RATING BAR
+                        Integer[] ratings = new Integer[]{1, 2, 3, 4, 5};
+                        ArrayAdapter<Integer> ratingOptions = new ArrayAdapter(mContext, R.layout.spinner_item, ratings);
+                        addRatLocal.setAdapter(ratingOptions);
+
+                        GestorCategorias gestorCategorias = new GestorCategorias();
+                        ArrayList<Categoria> categoriaArrayList = gestorCategorias.listar(mContext);
+                        String[] categorias = new String[categoriaArrayList.size()];
+                        for (int i = 0; i < categoriaArrayList.size(); i++) {
+                            categorias[i] = categoriaArrayList.get(i).getNome();
+                        }
+
+                        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(mContext, R.layout.spinner_item, categorias);
+                        addCategoriaSpinner.setAdapter(adapter);
+
+                        //obter coordenadas no mapa
+                        obterCoordenadasMapa.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                Intent i = new Intent(mContext, LocalObterCoordenadas.class);
+                                startActivityForResult(i, 1);
+
+
                             }
+                        });
+
+                        //carregar dados e update
+                        btnAddLocal.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (!addNomeCat.getText().toString().matches("") && !addDescLocal.getText().toString().matches("") &&
+                                        !addLatitude.getText().toString().matches("") && !addLongitude.getText().toString().matches("")) {
+
+                                    Categoria categoria = new GestorCategorias().getCategoriaByName(addCategoriaSpinner.getSelectedItem().toString(),
+                                            mContext);
+                                    Coordenadas coordenadas = new Coordenadas(addLatitude.getText().toString(), addLongitude.getText().toString());
+                                    Local newLocal = new Local(mLocais.size(), addNomeCat.getText().toString(), addDescLocal.getText().toString(),
+                                            (Integer) addRatLocal.getSelectedItem(), coordenadas, categoria);
+                                    GestorLocaisInteresse gestorLocaisInteresse = new GestorLocaisInteresse();
+                                    Boolean resultadoOperacao = gestorLocaisInteresse.adicionar(newLocal, mContext);
+
+                                    if (resultadoOperacao == true) {
+
+                                        Toast.makeText(mContext, "Local adicionado!", Toast.LENGTH_SHORT).show();
+                                        builder.dismiss();
+                                    } else {
+                                        Toast.makeText(mContext, "Erro ao adicionar local!", Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                } else {
+                                    Toast.makeText(mContext, "Erro ao adicionar local!", Toast.LENGTH_SHORT).show();
+
+                                }
 
 
-                        }*/
+                            }
+                        });
+
+                        btnCancelAddLocal.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                builder.dismiss();
+                            }
+                        });
+                        builder.setView(va);
+                        builder.show();
+
+
                     }
                 });
-                builder.setView(va);
-                builder.show();
 
-            }
-        });
     }
 
     @Override
@@ -261,7 +320,7 @@ public class LocaisFragment extends ListFragment {
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(ListView l, View v, final int position, long id) {
         super.onListItemClick(l, v, position, id);
         final Local c = new Local(mLocais.get(position).getId(),mLocais.get(position).getNome(),
                 mLocais.get(position).getDescricao(), mLocais.get(position).getRating(),  mLocais.get(position).getCoordenadas(), mLocais.get(position).getCategoria());
@@ -276,9 +335,7 @@ public class LocaisFragment extends ListFragment {
                 //Botao remove
                 GestorADT<Local> gestorLocs = new GestorLocaisInteresse();
                 gestorLocs.remover(c,mContext);
-                mLocais.clear();
-                final GestorLocaisInteresse gestorLocais = new GestorLocaisInteresse();
-                mLocais.addAll(gestorLocais.listar(mContext));
+                mLocais.remove(position);
                 mAdapter.notifyDataSetChanged();
                 Toast.makeText(mContext,"Local removida!", Toast.LENGTH_SHORT).show();
             }
@@ -287,8 +344,9 @@ public class LocaisFragment extends ListFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent i = new Intent(mContext, InformacaoLocal.class);
-                i.putExtra("idLocal",mLocais.get(pos).getId());
+                i.putExtra("idLocal", mLocais.get(pos).getId());
                 startActivity(i);
+
             }
         });
         builder.setNeutralButton("Nada", new DialogInterface.OnClickListener() {
@@ -309,5 +367,9 @@ public class LocaisFragment extends ListFragment {
         //  menu.inflate(R.menu.menu_main_ativity,menu);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
+    }
 }

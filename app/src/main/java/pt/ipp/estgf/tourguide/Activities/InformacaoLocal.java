@@ -22,6 +22,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import pt.ipp.estgf.tourguide.Classes.Categoria;
+import pt.ipp.estgf.tourguide.Classes.Coordenadas;
 import pt.ipp.estgf.tourguide.Classes.Local;
 import pt.ipp.estgf.tourguide.Fragments.FragmentMap;
 import pt.ipp.estgf.tourguide.Fragments.LocalMapFragment;
@@ -41,17 +42,17 @@ public class InformacaoLocal extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        Intent intent = getIntent();
-        int idLocal = intent.getExtras().getInt("idLocal");
+        final Intent intent = getIntent();
+        final int idLocal = intent.getExtras().getInt("idLocal");
 
-        GestorLocaisInteresse gestorLocaisInteresse = new GestorLocaisInteresse();
+        final GestorLocaisInteresse gestorLocaisInteresse = new GestorLocaisInteresse();
 
-        TextView nomeLocal = (TextView) findViewById(R.id.infLocalNomeLocal);
-        TextView categoriaLocal = (TextView) findViewById(R.id.infLocalCategoria);
-        TextView descLocal = (TextView) findViewById(R.id.infLocalDescricao);
-        TextView latLocal = (TextView) findViewById(R.id.infLocalLat);
-        TextView logLocal = (TextView) findViewById(R.id.infLocalLong);
-        RatingBar ratingLocal = (RatingBar) findViewById(R.id.infLocalRating);
+        final TextView nomeLocal = (TextView) findViewById(R.id.infLocalNomeLocal);
+        final TextView categoriaLocal = (TextView) findViewById(R.id.infLocalCategoria);
+        final TextView descLocal = (TextView) findViewById(R.id.infLocalDescricao);
+        final TextView latLocal = (TextView) findViewById(R.id.infLocalLat);
+        final TextView logLocal = (TextView) findViewById(R.id.infLocalLong);
+        final RatingBar ratingLocal = (RatingBar) findViewById(R.id.infLocalRating);
         FrameLayout frameLayout = (FrameLayout) findViewById(R.id.idInfLocalMapa);
 
 
@@ -80,20 +81,21 @@ public class InformacaoLocal extends AppCompatActivity {
                 final LayoutInflater inflater = getLayoutInflater();
                 View va = View.inflate(InformacaoLocal.this, R.layout.layout_edit_local, null);
 
-                Button btnEditLocal = (Button) va.findViewById(R.id.btn_addLoc);
-                Button btnCancelEditLocal = (Button) va.findViewById(R.id.btn_addLoc);
-                EditText edtNomeCat = (EditText) va.findViewById(R.id.editNomeLocal);
-                EditText edtDescLocal = (EditText) va.findViewById(R.id.editDescricaoLocal);
-                Spinner edtRatLocal = (Spinner) va.findViewById(R.id.spinnerSelectRating);
-                EditText edtLatitude = (EditText) va.findViewById(R.id.editLatitudeLocal);
-                EditText edtLongitude = (EditText) va.findViewById(R.id.editLongitudeLocal);
-                Spinner edtCategoriaSpinner = (Spinner) va.findViewById(R.id.spinnerSelectCategoria);
+                Button btnEditLocal = (Button) va.findViewById(R.id.btn_editLoc);
+                Button btnCancelEditLocal = (Button) va.findViewById(R.id.btn_editCancel);
+                final EditText edtNomeCat = (EditText) va.findViewById(R.id.editNomeLocal);
+                final EditText edtDescLocal = (EditText) va.findViewById(R.id.editDescricaoLocal);
+                final Spinner edtRatLocal = (Spinner) va.findViewById(R.id.spinnerSelectRating);
+                final EditText edtLatitude = (EditText) va.findViewById(R.id.editLatitudeLocal);
+                final EditText edtLongitude = (EditText) va.findViewById(R.id.editLongitudeLocal);
+                final Button obterCoordenadasMapa = (Button) va.findViewById(R.id.obterCoordenadasMapa);
+                final Spinner edtCategoriaSpinner = (Spinner) va.findViewById(R.id.spinnerSelectCategoria);
 
                 edtNomeCat.setText(local.getNome());
                 edtDescLocal.setText(local.getDescricao());
 
                 //RATING BAR
-                Integer[] ratings = new Integer[]{1,2,3,4,5};
+                Integer[] ratings = new Integer[]{1, 2, 3, 4, 5};
                 ArrayAdapter<Integer> ratingOptions = new ArrayAdapter(InformacaoLocal.this, R.layout.spinner_item, ratings);
                 edtRatLocal.setAdapter(ratingOptions);
                 edtRatLocal.setSelection(ratingOptions.getPosition(local.getRating()));
@@ -110,13 +112,60 @@ public class InformacaoLocal extends AppCompatActivity {
 
                 ArrayAdapter<CharSequence> adapter = new ArrayAdapter(InformacaoLocal.this, R.layout.spinner_item, categorias);
                 edtCategoriaSpinner.setAdapter(adapter);
+                edtCategoriaSpinner.setSelection(adapter.getPosition(local.getCategoria().getNome()));
 
+                //obter coordenadas no mapa
+                obterCoordenadasMapa.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent i = new Intent(InformacaoLocal.this, LocalObterCoordenadas.class);
+                        i.putExtra("idLocal", idLocal);
+                        startActivityForResult(i, 1);
+
+
+                    }
+                });
 
                 //carregar dados e update
                 btnEditLocal.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (!edtNomeCat.getText().toString().matches("") && !edtDescLocal.getText().toString().matches("") &&
+                                !edtLatitude.getText().toString().matches("") && !edtLongitude.getText().toString().matches("")) {
 
+                            Categoria categoria = new GestorCategorias().getCategoriaByName(edtCategoriaSpinner.getSelectedItem().toString(),
+                                    InformacaoLocal.this);
+                            Coordenadas coordenadas = new Coordenadas(edtLatitude.getText().toString(), edtLongitude.getText().toString());
+                            Local newLocal = new Local(local.getId(), edtNomeCat.getText().toString(), edtDescLocal.getText().toString(),
+                                    (Integer) edtRatLocal.getSelectedItem(), coordenadas, categoria);
+                            Boolean resultadoOperacao = gestorLocaisInteresse.editar(newLocal, local, InformacaoLocal.this);
+
+                            if (resultadoOperacao == true) {
+
+                                Toast.makeText(getApplicationContext(), "Local editado!", Toast.LENGTH_SHORT).show();
+                                builder.dismiss();
+
+                                Intent intent1 = getIntent();
+                                finish();
+                                startActivity(intent1);
+
+                            } else {
+                            }
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Erro ao editar local!", Toast.LENGTH_SHORT).show();
+
+                        }
+
+
+                    }
+                });
+
+                btnCancelEditLocal.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        builder.dismiss();
                     }
                 });
                 builder.setView(va);
@@ -125,7 +174,25 @@ public class InformacaoLocal extends AppCompatActivity {
             }
         });
 
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+
+        EditText edtLatitude = (EditText) findViewById(R.id.editLatitudeLocal);
+        EditText edtLongitude = (EditText) findViewById(R.id.editLongitudeLocal);
+
+        if (requestCode == 1) {
+            if (resultCode == this.RESULT_OK) {
+                String latitudeCoordenadas = data.getStringExtra("latitude");
+                String longitudeCoordenadas = data.getStringExtra("longitude");
+                edtLatitude.setText(latitudeCoordenadas);
+                edtLongitude.setText(longitudeCoordenadas);
+
+            }
+        }
+    }
 }
