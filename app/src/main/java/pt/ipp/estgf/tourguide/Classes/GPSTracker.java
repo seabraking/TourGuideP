@@ -1,4 +1,4 @@
-package pt.ipp.estgf.tourguide.Services;
+package pt.ipp.estgf.tourguide.Classes;
 
 import android.Manifest;
 import android.app.Service;

@@ -1,36 +1,20 @@
 package pt.ipp.estgf.tourguide.Activities;
 
-import android.Manifest;
-import android.app.SearchManager;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TypefaceSpan;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +24,7 @@ import java.util.Locale;
 
 import pt.ipp.estgf.tourguide.Fragments.ViewPagerAdapter;
 import pt.ipp.estgf.tourguide.R;
-import pt.ipp.estgf.tourguide.Services.GPSTracker;
+import pt.ipp.estgf.tourguide.Classes.GPSTracker;
 
 
 public class MainAtivity extends AppCompatActivity implements LocationListener{

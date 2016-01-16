@@ -3,29 +3,24 @@ package pt.ipp.estgf.tourguide.Adapter;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import pt.ipp.estgf.tourguide.Activities.MainAtivity;
 import pt.ipp.estgf.tourguide.Classes.Local;
 import pt.ipp.estgf.tourguide.Gestores.GestorCategorias;
 import pt.ipp.estgf.tourguide.R;
-import pt.ipp.estgf.tourguide.Services.GPSTracker;
+import pt.ipp.estgf.tourguide.Classes.GPSTracker;
 
 /**
  * Created by bia on 14/12/2015.
