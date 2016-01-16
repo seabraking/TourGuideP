@@ -40,7 +40,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".Activities.LocaisRota" />
-        <activity android:name=".Activities.SettingsActivity" />
+        <activity android:name=".Activities.SettingsActivity"  />
         <activity android:name=".Activities.InformacaoLocal" />
         <receiver
             android:exported="false"

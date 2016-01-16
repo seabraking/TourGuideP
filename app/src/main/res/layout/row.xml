@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="wrap_content"
     android:layout_width="wrap_content" android:orientation="horizontal">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1">
+
 
     <ImageView
         android:id="@+id/iconCategoria"
@@ -23,15 +28,39 @@
     android:paddingLeft="6dip"
     android:minHeight="?android:attr/listPreferredItemHeight"
     />
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/txtDesc"
-        android:layout_width="match_parent"
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/azul"
-        android:gravity="center_vertical"
-        android:paddingLeft="6dip"
-        android:minHeight="?android:attr/listPreferredItemHeight"
-        />
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/txtDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/azul"
+            android:gravity="center_vertical"
+            android:paddingLeft="6dip"
 
+            android:minHeight="?android:attr/listPreferredItemHeight"
+            />
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/txtDistancia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/fab_color_1"
+            android:gravity="center_vertical"
+            android:paddingLeft="6dip"
+            android:text="22 km"
+
+            android:minHeight="?android:attr/listPreferredItemHeight"
+            />
+
+
+
+    </LinearLayout>
 </LinearLayout>
