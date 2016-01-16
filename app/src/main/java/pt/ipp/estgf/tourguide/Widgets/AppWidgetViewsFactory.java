@@ -68,14 +68,11 @@ public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFact
 
         //
         GPSTracker gpsTracker = new GPSTracker(context, this);
-        checkGPS();
-
         if (gpsTracker.canGetLocation()) {
-            stringLatitude = String.valueOf(gpsTracker.getLatitude());
-            stringLongitude = String.valueOf(gpsTracker.getLongitude());
+
             DecimalFormat df = new DecimalFormat("#.0");
-            Double lat1 = (Double.parseDouble(stringLatitude));
-            Double long1 = Double.parseDouble(stringLongitude);
+            Double lat1 = ((gpsTracker.getLatitude()));
+            Double long1 = ((gpsTracker.getLongitude()));
             Double lat2 = Double.parseDouble(arrayList.get(position).getCoordenadas().getLatitude());
             Double long2 = Double.parseDouble(arrayList.get(position).getCoordenadas().getLongitude());
             row.setTextViewText(R.id.txtDesc,arrayList.get(position).getDescricao()+ df.format(gpsTracker.distance(lat1,long1,lat2, long2)));
@@ -116,10 +113,9 @@ public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFact
 
     @Override
     public void onDataSetChanged() {
-     /*   GestorLocaisInteresse gestor = new GestorLocaisInteresse();
+        GestorLocaisInteresse gestor = new GestorLocaisInteresse();
         arrayList.clear();
-       arrayList.addAll(gestor.listar(context));*/
-     //   arrayList.add(new Local("oi","oi","oi","","","",""));
+       arrayList.addAll(gestor.listar(context));
 
 
     }
