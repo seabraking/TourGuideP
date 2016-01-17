@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 
 import pt.ipp.estgf.tourguide.Classes.GPSTracker;
 import pt.ipp.estgf.tourguide.Classes.Local;
+import pt.ipp.estgf.tourguide.Fragments.LocaisFragment;
 import pt.ipp.estgf.tourguide.Gestores.GestorCategorias;
 import pt.ipp.estgf.tourguide.Gestores.GestorLocaisInteresse;
 import pt.ipp.estgf.tourguide.R;
@@ -29,6 +31,7 @@ public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFact
     //private int appWidgetId;
     private ArrayList<Local> arrayList = new ArrayList<Local>();
     String stringLatitude = "", stringLongitude = "";
+    GPSTracker gpsTracker;
     public AppWidgetViewsFactory(Context ctxt, Intent intent) {
         this.context = ctxt;
 		/*appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
@@ -39,7 +42,6 @@ public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFact
     @Override
     public void onCreate() {
         GestorLocaisInteresse gestor = new GestorLocaisInteresse();
-
         arrayList.addAll(gestor.listar(context));
     }
 
@@ -63,22 +65,18 @@ public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFact
         String ico = gCats.mostrarIconCat(context,arrayList.get(position).getCategoria().getNome());
         int id = context.getResources().getIdentifier(ico, "drawable",
                 context.getPackageName());
-        row.setImageViewResource(R.id.iconCategoria,id);
+        row.setImageViewResource(R.id.iconCategoria, id);
         row.setTextViewText(R.id.txtDesc,arrayList.get(position).getDescricao());
 
-        //
-        GPSTracker gpsTracker = new GPSTracker(context, this);
-        checkGPS();
 
-        if (gpsTracker.canGetLocation()) {
-            stringLatitude = String.valueOf(gpsTracker.getLatitude());
-            stringLongitude = String.valueOf(gpsTracker.getLongitude());
+        if (!WidgetProvider.getLat().matches("")) {
             DecimalFormat df = new DecimalFormat("#.0");
-            Double lat1 = (Double.parseDouble(stringLatitude));
-            Double long1 = Double.parseDouble(stringLongitude);
+            Double lat1 = Double.parseDouble(WidgetProvider.getLat());
+            Double long1 = Double.parseDouble(WidgetProvider.getLong());
+
             Double lat2 = Double.parseDouble(arrayList.get(position).getCoordenadas().getLatitude());
             Double long2 = Double.parseDouble(arrayList.get(position).getCoordenadas().getLongitude());
-            row.setTextViewText(R.id.txtDesc,arrayList.get(position).getDescricao()+ df.format(gpsTracker.distance(lat1,long1,lat2, long2)));
+            row.setTextViewText(R.id.txtDesc,arrayList.get(position).getDescricao()+  " - " + df.format(distance(lat1,long1,lat2, long2)) + "km");
         } else {
             row.setTextViewText(R.id.txtDesc, "No Gps");
 
@@ -116,10 +114,9 @@ public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFact
 
     @Override
     public void onDataSetChanged() {
-     /*   GestorLocaisInteresse gestor = new GestorLocaisInteresse();
+        GestorLocaisInteresse gestor = new GestorLocaisInteresse();
         arrayList.clear();
-       arrayList.addAll(gestor.listar(context));*/
-     //   arrayList.add(new Local("oi","oi","oi","","","",""));
+       arrayList.addAll(gestor.listar(context));
 
 
     }
@@ -142,25 +139,44 @@ public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFact
 
     @Override
     public void onLocationChanged(Location location) {
-        checkGPS();
-        onDataSetChanged();
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        checkGPS();
-        onDataSetChanged();
 
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-        checkGPS();
 
     }
 
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+
+    public double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        dist = dist * 1.609344;
+        return (dist);
+    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    /*::  This function converts decimal degrees to radians             :*/
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    /*::  This function converts radians to decimal degrees             :*/
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
     }
 }
