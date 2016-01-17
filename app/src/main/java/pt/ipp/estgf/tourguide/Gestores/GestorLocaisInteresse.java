@@ -28,22 +28,23 @@ public class GestorLocaisInteresse implements GestorADT<Local> {
     @Override
     public boolean adicionar(Local elemento,Context context) {
         try {
-            String adicionarLocalInteresseSQL = "INSERT INTO tbl_poi( " +
-                    "name VARCHAR(75), description VARCHAR(255), latitude VARCHAR(15), longitude  VARCHAR(15)," +
-                    "rating INTEGER, category_name VARCHAR(75)) VALUES (" +
-                    elemento.getNome() + "," +
-                    elemento.getDescricao() + "," +
-                    elemento.getCoordenadas().getLatitude()+"," +
-                    elemento.getCoordenadas().getLongitude()+"," +
-                    elemento.getRating()+"," +
-                    elemento.getCategoria().getNome()+");";
+            String adicionarLocalInteresseSQL = "INSERT INTO tbl_poi(name,description,latitude,longitude,rating,category_name) VALUES (" +
+                    "'" + elemento.getNome() +
+                    "','" + elemento.getDescricao() +
+                    "','" + elemento.getCoordenadas().getLatitude() +
+                    "','" + elemento.getCoordenadas().getLongitude() +
+                    "','" + elemento.getRating() +
+                    "','" + elemento.getCategoria().getNome() +
+                    "');";
             SQLiteConnect dbHelper = new SQLiteConnect(context);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             db.execSQL(adicionarLocalInteresseSQL);
             return true;
+
         } catch (Exception e) {
             return false;
         }
+
     }
 
     /**
