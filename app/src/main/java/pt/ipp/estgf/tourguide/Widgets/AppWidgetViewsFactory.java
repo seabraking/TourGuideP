@@ -1,13 +1,16 @@
 package pt.ipp.estgf.tourguide.Widgets;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import android.widget.TextView;
@@ -28,21 +31,42 @@ import pt.ipp.estgf.tourguide.R;
  */
 public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory, LocationListener {
     private Context context = null;
-    //private int appWidgetId;
+    private int appWidgetId;
     private ArrayList<Local> arrayList = new ArrayList<Local>();
     String stringLatitude = "", stringLongitude = "";
     GPSTracker gpsTracker;
+    Double raio;
     public AppWidgetViewsFactory(Context ctxt, Intent intent) {
         this.context = ctxt;
-		/*appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+		appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
 				AppWidgetManager.INVALID_APPWIDGET_ID);
-		Log.e(getClass().getSimpleName(), appWidgetId + "");*/
+
     }
+
 
     @Override
     public void onCreate() {
         GestorLocaisInteresse gestor = new GestorLocaisInteresse();
-        arrayList.addAll(gestor.listar(context));
+        ArrayList<Local>tmpList = new ArrayList<>();
+
+        tmpList.addAll(gestor.listar(context));
+        for(int i = 0; i<tmpList.size();i++){
+
+
+            //     Toast.makeText(context,String.valueO
+            raio = Double.parseDouble(WidgetProvider.getRaio());
+            Double lat1 = Double.parseDouble(WidgetProvider.getLat());
+            Double long1 = Double.parseDouble(WidgetProvider.getLong());
+
+            Double lat2 = Double.parseDouble(tmpList.get(i).getCoordenadas().getLatitude());
+            Double long2 = Double.parseDouble(tmpList.get(i).getCoordenadas().getLongitude());
+
+           Double distance =  distance(lat1, long1, lat2, long2);
+           if(distance<raio){
+               arrayList.add(tmpList.get(i));
+            }
+
+        }
     }
 
     @Override
@@ -66,7 +90,10 @@ public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFact
         int id = context.getResources().getIdentifier(ico, "drawable",
                 context.getPackageName());
         row.setImageViewResource(R.id.iconCategoria, id);
-        row.setTextViewText(R.id.txtDesc,arrayList.get(position).getDescricao());
+        row.setTextViewText(R.id.txtDesc, arrayList.get(position).getDescricao());
+        //
+
+        row.setTextViewText(R.id.txtDesc,String.valueOf(raio));
 
 
         if (!WidgetProvider.getLat().matches("")) {
@@ -114,9 +141,30 @@ public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFact
 
     @Override
     public void onDataSetChanged() {
-        GestorLocaisInteresse gestor = new GestorLocaisInteresse();
         arrayList.clear();
-       arrayList.addAll(gestor.listar(context));
+        GestorLocaisInteresse gestor = new GestorLocaisInteresse();
+        ArrayList<Local>tmpList = new ArrayList<>();
+
+        tmpList.addAll(gestor.listar(context));
+        for(int i = 0; i<tmpList.size();i++){
+
+
+            //     Toast.makeText(context,String.valueO
+           // raio = Double.parseDouble(WidgetProvider.getRaio());
+            SharedPreferences shr = PreferenceManager.getDefaultSharedPreferences(context);
+            raio = Double.parseDouble(shr.getString("pref_raio", "15"));
+            Double lat1 = Double.parseDouble(WidgetProvider.getLat());
+            Double long1 = Double.parseDouble(WidgetProvider.getLong());
+
+            Double lat2 = Double.parseDouble(tmpList.get(i).getCoordenadas().getLatitude());
+            Double long2 = Double.parseDouble(tmpList.get(i).getCoordenadas().getLongitude());
+
+            Double distance =  distance(lat1, long1, lat2, long2);
+            if(distance<raio){
+                arrayList.add(tmpList.get(i));
+            }
+
+        }
 
 
     }

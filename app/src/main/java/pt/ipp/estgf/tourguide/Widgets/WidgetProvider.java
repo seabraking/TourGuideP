@@ -6,9 +6,11 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -28,7 +30,7 @@ public class WidgetProvider extends AppWidgetProvider implements LocationListene
     private static String lat ="";
     private static String longitude="";
     Context c;
-
+    static String raio="50";
     public static String getLat() {
         return lat;
     }
@@ -36,6 +38,12 @@ public class WidgetProvider extends AppWidgetProvider implements LocationListene
     public static String getLong() {
         return longitude;
     }
+
+    public static String getRaio() {
+        return raio;
+    }
+
+
 
     public void setLat(String lat) {
         this.lat = lat;
@@ -48,6 +56,7 @@ public class WidgetProvider extends AppWidgetProvider implements LocationListene
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         c = context;
+
         GPSTracker gpsTracker = new GPSTracker(context,this);
         if (gpsTracker.canGetLocation()) {
             lat = String.valueOf((gpsTracker.getLatitude()));
@@ -55,6 +64,8 @@ public class WidgetProvider extends AppWidgetProvider implements LocationListene
         }
         Log.e("app widget id - ", appWidgetIds.length + "");
         for (int i = 0; i < appWidgetIds.length; i++) {
+           SharedPreferences shr = PreferenceManager.getDefaultSharedPreferences(context);
+            raio = String.valueOf(shr.getString("pref_raio", "15"));
             Intent svcIntent = new Intent(context, WidgetService.class);
             //svcIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
             //svcIntent.setData(Uri.parse(svcIntent .toUri(Intent.URI_INTENT_SCHEME)));
@@ -77,6 +88,7 @@ public class WidgetProvider extends AppWidgetProvider implements LocationListene
 
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
