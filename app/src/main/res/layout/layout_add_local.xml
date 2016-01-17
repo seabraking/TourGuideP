@@ -22,12 +22,13 @@
         android:layout_gravity="center_horizontal"
         android:text="Nome Local"
         android:textColor="@color/preto"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:paddingLeft="@dimen/paddingestao"/>
 
     <EditText
         android:id="@+id/addNomeLocal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -35,12 +36,13 @@
         android:layout_gravity="center_horizontal"
         android:text="Descrição"
         android:textColor="@color/preto"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:paddingLeft="@dimen/paddingestao"/>
 
     <EditText
         android:id="@+id/addDescricaoLocal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -48,12 +50,13 @@
         android:layout_gravity="center_horizontal"
         android:text="Rating"
         android:textColor="@color/preto"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:paddingLeft="@dimen/paddingestao"/>
 
     <Spinner
         android:id="@+id/spinnerSelectRating"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 
 
@@ -63,7 +66,8 @@
         android:layout_gravity="center_horizontal"
         android:text="Coordenadas"
         android:textColor="@color/preto"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:paddingLeft="@dimen/paddingestao"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -112,7 +116,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner"
-        android:text="Obter Coordenadas no mapa" />
+        android:text="Obter Coordenadas no mapa"
+        android:layout_gravity="center"/>
 
 
     <TextView
@@ -121,12 +126,13 @@
         android:layout_gravity="center_horizontal"
         android:text="Categoria"
         android:textColor="@color/preto"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:paddingLeft="@dimen/paddingestao"/>
 
     <Spinner
         android:id="@+id/spinnerSelectCategoria"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 
     <LinearLayout
@@ -142,7 +148,6 @@
             android:layout_alignParentRight="true"
             android:layout_weight="1"
             android:background="@color/azul"
-            android:drawableLeft="@drawable/ic_add"
             android:text="Cancelar"
             android:textColor="@color/branco" />
 

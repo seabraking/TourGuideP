@@ -1,5 +1,7 @@
 package pt.ipp.estgf.tourguide.Classes;
 
+import java.util.ArrayList;
+
 import pt.ipp.estgf.tourguide.Gestores.GestorLocaisInteresse;
 
 /**
@@ -9,13 +11,13 @@ public class Rota {
     private int id;
     private String nome;
     private String descricaoRota;
-    private GestorLocaisInteresse gestorLocaisInteresse;
+    private ArrayList<Local> localArrayList;
 
-    public Rota(int id,String nome, String descricaoRota, GestorLocaisInteresse gestorLocaisInteresse) {
+    public Rota(int id,String nome, String descricaoRota, ArrayList<Local> localArrayList) {
         this.id = id;
         this.nome = nome;
         this.descricaoRota = descricaoRota;
-        this.gestorLocaisInteresse = gestorLocaisInteresse;
+        this.localArrayList = localArrayList;
     }
     public Rota(int id,String nome, String descricaoRota) {
         this.id = id;
@@ -43,11 +45,11 @@ public class Rota {
         this.descricaoRota = descricaoRota;
     }
 
-    public GestorLocaisInteresse getGestorLocaisInteresse() {
-        return gestorLocaisInteresse;
+    public ArrayList<Local> getLocalArrayList() {
+        return localArrayList;
     }
 
-    public void setGestorLocaisInteresse(GestorLocaisInteresse gestorLocaisInteresse) {
-        this.gestorLocaisInteresse = gestorLocaisInteresse;
+    public void setLocalArrayList(ArrayList<Local> localArrayList) {
+        this.localArrayList = localArrayList;
     }
 }

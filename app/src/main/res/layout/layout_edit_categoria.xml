@@ -25,7 +25,6 @@
             android:id="@+id/btn_Cancel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableLeft="@drawable/ic_add"
             android:layout_weight="1"
             android:layout_alignParentRight="true"
             android:text="Cancelar"
@@ -39,7 +38,7 @@
             android:layout_height="match_parent"
             android:drawableLeft="@drawable/ic_add"
             android:layout_alignParentRight="true"
-            android:text="Adicionar"
+            android:text="Editar"
             android:textColor="@color/branco"
             android:background="@color/azul"
             android:layout_alignParentBottom="true" />

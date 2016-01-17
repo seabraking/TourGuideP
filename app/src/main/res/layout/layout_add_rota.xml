@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/azul"
+        android:textStyle="bold"
+        android:textColor="@color/branco"
+        android:text="Adicionar Rota"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/azul"
-        android:padding="30dp"
-        android:textAlignment="center"
-        android:text="Adicionar Local à Rota"
-        android:textColor="@color/branco"
-        android:textStyle="bold" />
+        android:layout_weight="1"
+        android:text="Nome"
+        android:textColor="@color/preto"
+        android:paddingLeft="@dimen/paddingestao"
+        android:textStyle="bold"/>
 
-    <Spinner
-        android:id="@+id/selectLocal"
+    <EditText
+        android:id="@+id/addNomeRota"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="wrap_content"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Descrição"
+        android:textStyle="bold"
+        android:textColor="@color/preto"
+        android:paddingLeft="@dimen/paddingestao"/>
+
+    <EditText
+        android:id="@+id/addDecricaoRota"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 
     <LinearLayout
@@ -34,12 +52,11 @@
             android:layout_weight="1"
             android:layout_alignParentRight="true"
             android:text="Cancelar"
-
             android:textColor="@color/branco"
             android:background="@color/azul"
             android:layout_alignParentBottom="true" />
         <Button
-            android:id="@+id/btn_addLocal"
+            android:id="@+id/btn_addRota"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -50,5 +67,4 @@
             android:background="@color/azul"
             android:layout_alignParentBottom="true" />
     </LinearLayout>
-
 </LinearLayout>
