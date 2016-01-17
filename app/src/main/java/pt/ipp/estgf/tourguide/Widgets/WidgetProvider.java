@@ -87,7 +87,7 @@ public class WidgetProvider extends AppWidgetProvider implements LocationListene
         Log.e("onReceive", "onReceive");
     }
 
-    private void updateWidget(Context context) {
+    public static void updateWidget(Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int appWidgetIds[] = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.words);

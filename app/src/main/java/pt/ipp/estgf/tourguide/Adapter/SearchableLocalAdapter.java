@@ -190,7 +190,7 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
 
                 return results;
 
-            } else if(filterString.startsWith("qc:")){
+            } /*else if(filterString.startsWith("qc:")){
                 String[] query = filterString.split("qc:");
                 String[] qrs = query[1].split(":");
                 String catQuery = qrs[0];
@@ -262,7 +262,7 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
                 results.count = nlist.size();
 
                 return results;
-            }  else {
+            }*/  else {
                 for (int i = 0; i < count; i++) {
                     filterableLocal = list.get(i);
                         nlist.add(filterableLocal);

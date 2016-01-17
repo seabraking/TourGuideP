@@ -2,7 +2,7 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:minWidth="294dip"
     android:minHeight="146dip"
-    android:updatePeriodMillis="4000"
+    android:updatePeriodMillis="12000000"
     android:initialLayout="@layout/widget"
     android:autoAdvanceViewId="@+id/words"
     android:background="@drawable/ic_categoria_banco"

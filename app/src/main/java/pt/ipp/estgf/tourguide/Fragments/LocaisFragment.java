@@ -1,6 +1,7 @@
 package pt.ipp.estgf.tourguide.Fragments;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,6 +44,7 @@ import pt.ipp.estgf.tourguide.Gestores.GestorCategorias;
 import pt.ipp.estgf.tourguide.Gestores.GestorLocaisInteresse;
 import pt.ipp.estgf.tourguide.Interfaces.GestorADT;
 import pt.ipp.estgf.tourguide.R;
+import pt.ipp.estgf.tourguide.Widgets.WidgetProvider;
 
 /**
  * Created by bia on 27/11/2015.
@@ -275,9 +277,12 @@ public class LocaisFragment extends ListFragment {
                                     if (resultadoOperacao == true) {
 
                                         Toast.makeText(mContext, "Local adicionado!", Toast.LENGTH_SHORT).show();
+                                        //Alertar o Widget
+                                        //WidgetProvider.updateWidget(mContext);
+                                        mAdapter.notifyDataSetChanged();
                                         builder.dismiss();
                                     } else {
-                                        Toast.makeText(mContext, "Erro ao adicionar local!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(mContext, "Erro ao adicionar local !", Toast.LENGTH_SHORT).show();
 
                                     }
 
