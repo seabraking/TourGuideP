@@ -168,7 +168,7 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
 
             //Definir variavel Local que vai ser Filtrado posteriormente
             Local filterableLocal;
-
+/*
             //Verificar se o filtro é uma SearchView com Query pelo Nome do Local
             if(filterString.startsWith("q:")){
                 String[] query = filterString.split("q:");
@@ -262,17 +262,17 @@ public class SearchableLocalAdapter extends BaseAdapter implements Filterable, L
                 results.count = nlist.size();
 
                 return results;
-            }*/  else {
+            }  else {*/
                 for (int i = 0; i < count; i++) {
                     filterableLocal = list.get(i);
                         nlist.add(filterableLocal);
 
                 }
-            }
 
 
-            results.values = nlist;
-            results.count = nlist.size();
+
+            results.values = mList;
+            results.count = mList.size();
 
             return results;
 
