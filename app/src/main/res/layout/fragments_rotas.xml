@@ -6,17 +6,67 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
 
-    <ListView
+
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/branco"
+            android:layout_marginTop="@dimen/list_margin"
+            android:layout_marginLeft="@dimen/subtitle_margin"
+            android:layout_marginRight="@dimen/subtitle_margin"
+            android:layout_marginBottom="@dimen/subtitle_margin"
+            android:divider="@color/cinza"
+            android:dividerHeight="4px"></ListView>
+
+
+
+        <TextView
+            android:id="@android:id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/txtrotasnaoexistentes"/>
+
+        <Button
+            android:id="@+id/btn_NewRota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_add"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentRight="true"
+            android:text="Adicionar"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/branco"
+            android:paddingRight="5dp"
+            android:background="@drawable/rounded_corner"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+
+    <!--<ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/list_margin">
     </ListView>
+    -->
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/txtrotasnaoexistentes"/>
+
+
+
+
+
 
 </LinearLayout>

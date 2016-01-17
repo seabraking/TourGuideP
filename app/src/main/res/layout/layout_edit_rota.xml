@@ -9,16 +9,38 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@color/azul"
-        android:padding="30dp"
-        android:text="Adicionar Categoria"
+        android:padding="20dp"
+        android:text="Editar Rota"
         android:textColor="@color/branco"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/editNomeCategoria"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="Nome da Categoria" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/paddingestao"
+        android:text="Nome"
+        android:textColor="@color/preto"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/editNomeRota"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/paddingestao"
+        android:text="Descrição"
+        android:textColor="@color/preto"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/editDecricaoRota"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +59,7 @@
             android:textColor="@color/branco" />
 
         <Button
-            android:id="@+id/btn_addCat"
+            android:id="@+id/btn_editRota"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
@@ -45,7 +67,7 @@
             android:layout_weight="1"
             android:background="@color/azul"
             android:drawableLeft="@drawable/ic_add"
-            android:text="Adicionar"
+            android:text="Editar"
             android:textColor="@color/branco" />
     </LinearLayout>
 </LinearLayout>

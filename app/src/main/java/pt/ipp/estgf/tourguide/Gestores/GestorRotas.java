@@ -29,10 +29,13 @@ public class GestorRotas implements GestorADT<Rota> {
     @Override
     public boolean adicionar(Rota elemento, Context context) {
         try {
-            String adicionarRotaSQL = "INSERT INTO tbl_tour(name" +
-                    "VARCHAR(75), description VARCHAR(255)) VALUES (" +
-                    elemento.getNome() + "," +
-                    elemento.getDescricaoRota() + ");";
+            String adicionarRotaSQL = "INSERT INTO tbl_tour(name,description) VALUES ('" +
+                    elemento.getNome() + "','" +
+                    elemento.getDescricaoRota() + "');";
+
+            SQLiteConnect db = new SQLiteConnect(context);
+            SQLiteDatabase rotasdb = db.getWritableDatabase();
+            rotasdb.execSQL(adicionarRotaSQL);
 
             return true;
         } catch (Exception e) {
@@ -80,9 +83,14 @@ public class GestorRotas implements GestorADT<Rota> {
     public boolean editar(Rota elemento, Rota oldElement, Context context) {
 
         try {
-            String editarCategoriaSQL = "UPDATE tbl_tour SET name ='" + elemento.getNome() +
+            String editarRotaSQL = "UPDATE tbl_tour SET name ='" + elemento.getNome() +
                     "',description='" + elemento.getDescricaoRota() +
                     "' WHERE id_tour ='" + elemento.getId() + "'";
+
+            SQLiteConnect dbHelper = new SQLiteConnect(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.execSQL(editarRotaSQL);
+
 
 
             return true;
@@ -91,10 +99,6 @@ public class GestorRotas implements GestorADT<Rota> {
         }
     }
 
-    @Override
-    public Rota remover(Rota elemento, Context contexto) {
-        return null;
-    }
 
     /**
      * Romover uma Rota da base de dados
@@ -102,6 +106,21 @@ public class GestorRotas implements GestorADT<Rota> {
      * @param elemento
      * @return retorna a Rota removida
      */
+
+    @Override
+    public Rota remover(Rota elemento, Context contexto) {
+
+        try {
+
+            String removerCategoriaSQL = "DELETE FROM tbl_tour WHERE id_tour=" + elemento.getId();
+            SQLiteConnect dbHelper = new SQLiteConnect(contexto);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.execSQL(removerCategoriaSQL);
+            return elemento;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
 
     /**
@@ -121,30 +140,6 @@ public class GestorRotas implements GestorADT<Rota> {
             SQLiteConnect db = new SQLiteConnect(context);
             SQLiteDatabase rotasdb = db.getWritableDatabase();
             rotasdb.execSQL(adicionarLocalRota);
-
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-
-    /**
-     * Adicionar Locais Interesse numa Rota pertencente a base de dados
-     *
-     * @param rota
-     * @param locais
-     * @return retorna o resultado da operacao
-     */
-    public boolean adicionarLocaisInteresseRota(Rota rota, Local[] locais) {
-        try {
-            int id = rota.getId();
-            for (int i = 0; i < locais.length; i++) {
-                String adicionarRotaSQL = "INSERT INTO tbl_tour_pois(id_tour INTEGER, id_poi INTEGER) VALUES (" +
-                        id + "," +
-                        locais[i].getId() + ");";
-            }
-
 
             return true;
         } catch (Exception e) {
