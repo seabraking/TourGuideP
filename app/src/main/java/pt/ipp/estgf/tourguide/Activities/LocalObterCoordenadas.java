@@ -1,11 +1,17 @@
 package pt.ipp.estgf.tourguide.Activities;
 
+
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import pt.ipp.estgf.tourguide.Fragments.ObterCoordenadasFragment;
 import pt.ipp.estgf.tourguide.R;
@@ -13,7 +19,7 @@ import pt.ipp.estgf.tourguide.R;
 /**
  * Created by Vitor on 16/01/2016.
  */
-public class LocalObterCoordenadas extends AppCompatActivity {
+public class LocalObterCoordenadas extends FragmentActivity {
     public String lat;
     public String lon;
 
@@ -21,6 +27,10 @@ public class LocalObterCoordenadas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rota_mapa);
+
+
+
+
 
         ObterCoordenadasFragment newFragment = new ObterCoordenadasFragment();
         Bundle args = new Bundle();
@@ -34,6 +44,7 @@ public class LocalObterCoordenadas extends AppCompatActivity {
         ft.commit();
 
 
+
         newFragment.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -43,7 +54,6 @@ public class LocalObterCoordenadas extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
 
 
     }
@@ -57,6 +67,5 @@ public class LocalObterCoordenadas extends AppCompatActivity {
         setResult(RESULT_OK, i);
         super.onBackPressed();
     }
-
 
 }

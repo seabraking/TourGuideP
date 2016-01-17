@@ -42,6 +42,7 @@
         <activity android:name=".Activities.LocaisRota" />
         <activity android:name=".Activities.SettingsActivity" />
         <activity android:name=".Activities.InformacaoLocal" />
+        <activity android:name=".Activities.LocalObterCoordenadas" />
         <receiver
             android:exported="false"
             android:name=".Widgets.WidgetProvider"

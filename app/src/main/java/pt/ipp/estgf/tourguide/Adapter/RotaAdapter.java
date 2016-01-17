@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 
 import pt.ipp.estgf.tourguide.Activities.LocaisRota;
 import pt.ipp.estgf.tourguide.Activities.RotaMapa;
+import pt.ipp.estgf.tourguide.Classes.Local;
 import pt.ipp.estgf.tourguide.Classes.Rota;
 import pt.ipp.estgf.tourguide.Fragments.FragmentMap;
 import pt.ipp.estgf.tourguide.Fragments.LocaisFragment;
@@ -55,7 +57,8 @@ public class RotaAdapter extends ArrayAdapter<Rota> {
 
         final TextView mNome = (TextView) v.findViewById(R.id.nomeRota);
         TextView mDesc = (TextView) v.findViewById(R.id.descricaoRota);
-        TextView id = (TextView) v.findViewById(R.id.rotaid);
+        final TextView id = (TextView) v.findViewById(R.id.rotaid);
+        RatingBar ratingBar = (RatingBar) v.findViewById(R.id.localRotaRating);
         mNome.setText(mList.get(position).getNome());
         mDesc.setText(mList.get(position).getDescricaoRota());
         id.setText(String.valueOf(mList.get(position).getId()));
@@ -70,10 +73,9 @@ public class RotaAdapter extends ArrayAdapter<Rota> {
             @Override
             public void onClick(View v) {
 
-                TextView textView = (TextView) newView.findViewById(R.id.rotaid);
 
                 Intent i = new Intent(v.getContext(), LocaisRota.class);
-                i.putExtra("idRota",Integer.parseInt(textView.getText().toString()));
+                i.putExtra("idRota",Integer.parseInt(id.getText().toString()));
                 i.putExtra("nomeRota",mNome.getText().toString());
                 context.startActivity(i);
             }
@@ -86,15 +88,30 @@ public class RotaAdapter extends ArrayAdapter<Rota> {
             @Override
             public void onClick(View v) {
 
-                TextView textView = (TextView) newView.findViewById(R.id.rotaid);
 
-                Intent i = new Intent(v.getContext(), RotaMapa.class);
-                i.putExtra("LocaisRota",Integer.parseInt(textView.getText().toString()));
+
+                Intent i = new Intent(context, RotaMapa.class);
+                i.putExtra("LocaisRota",Integer.parseInt(id.getText().toString()));
                 context.startActivity(i);
 
                 //
             }
         });
+
+        //Media dos locais da rota
+        GestorRotas gestorRotas = new GestorRotas();
+        ArrayList<Local> localArrayList = gestorRotas.listarLocaisRota(Integer.parseInt(id.getText().toString()),context);
+        float rating = 0;
+        for(int i=0;i<localArrayList.size();i++){
+            rating += localArrayList.get(i).getRating();
+        }
+
+        if(localArrayList.size()!=0){
+
+            ratingBar.setRating(rating/localArrayList.size());
+        }
+
+
 
 
 

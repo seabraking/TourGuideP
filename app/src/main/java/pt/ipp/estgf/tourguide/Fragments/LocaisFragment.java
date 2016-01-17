@@ -1,12 +1,12 @@
 package pt.ipp.estgf.tourguide.Fragments;
 
 import android.app.Activity;
-import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Rating;
 import android.os.Bundle;
+import android.preference.DialogPreference;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -44,7 +44,6 @@ import pt.ipp.estgf.tourguide.Gestores.GestorCategorias;
 import pt.ipp.estgf.tourguide.Gestores.GestorLocaisInteresse;
 import pt.ipp.estgf.tourguide.Interfaces.GestorADT;
 import pt.ipp.estgf.tourguide.R;
-import pt.ipp.estgf.tourguide.Widgets.WidgetProvider;
 
 /**
  * Created by bia on 27/11/2015.
@@ -191,24 +190,8 @@ public class LocaisFragment extends ListFragment {
             }
         };
         txtPesquisa.setOnQueryTextListener(searchTextWatcher);
-/*
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if(position > 0){
-                    // get spinner value
-                }else{
-                    // show toast select gender
-                }
-                // mAdapter.getFilter().filter("c:" + spinner.toString());
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
 
-        });*/
 
         final Button btnAdd = (Button) getView().findViewById(R.id.btn_NewLoc);
 
@@ -277,17 +260,16 @@ public class LocaisFragment extends ListFragment {
                                     if (resultadoOperacao == true) {
 
                                         Toast.makeText(mContext, "Local adicionado!", Toast.LENGTH_SHORT).show();
-                                        //Alertar o Widget
-                                        //WidgetProvider.updateWidget(mContext);
+                                        mLocais.add(newLocal);
                                         mAdapter.notifyDataSetChanged();
                                         builder.dismiss();
                                     } else {
-                                        Toast.makeText(mContext, "Erro ao adicionar local !", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(mContext, "SQL - Erro ao adicionar local!", Toast.LENGTH_SHORT).show();
 
                                     }
 
                                 } else {
-                                    Toast.makeText(mContext, "Erro ao adicionar local!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(mContext, "Preencha os campos todos!", Toast.LENGTH_SHORT).show();
 
                                 }
 
@@ -339,10 +321,10 @@ public class LocaisFragment extends ListFragment {
             public void onClick(DialogInterface dialog, int which) {
                 //Botao remove
                 GestorADT<Local> gestorLocs = new GestorLocaisInteresse();
-                gestorLocs.remover(c,mContext);
+                gestorLocs.remover(c, mContext);
                 mLocais.remove(position);
                 mAdapter.notifyDataSetChanged();
-                Toast.makeText(mContext,"Local removida!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Local removida!", Toast.LENGTH_SHORT).show();
             }
         });
         builder.setPositiveButton("Detalhes", new DialogInterface.OnClickListener() {
@@ -351,6 +333,7 @@ public class LocaisFragment extends ListFragment {
                 Intent i = new Intent(mContext, InformacaoLocal.class);
                 i.putExtra("idLocal", mLocais.get(pos).getId());
                 startActivity(i);
+
 
             }
         });
@@ -363,18 +346,16 @@ public class LocaisFragment extends ListFragment {
 
         builder.show();
 
-        /*        mCategorias.add(new Categoria("Java","jpg.jpg"));
-        mAdapter.notifyDataSetChanged();
-        */
-        /*Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(i, RESULT_LOAD_IMG);*/
-        // MenuInflater menu = new MenuInflater(mContext);
-        //  menu.inflate(R.menu.menu_main_ativity,menu);
+
     }
+
 
     @Override
     public void onResume() {
         super.onResume();
-
+        mLocais.clear();
+        GestorLocaisInteresse gestorLocaisInteresse = new GestorLocaisInteresse();
+        mLocais.addAll(gestorLocaisInteresse.listar(mContext));
+        mAdapter.notifyDataSetChanged();
     }
 }
