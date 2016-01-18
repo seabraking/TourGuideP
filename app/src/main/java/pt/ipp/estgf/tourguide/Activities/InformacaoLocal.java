@@ -3,6 +3,12 @@ package pt.ipp.estgf.tourguide.Activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,10 +25,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import pt.ipp.estgf.tourguide.Classes.Categoria;
 import pt.ipp.estgf.tourguide.Classes.Coordenadas;
+import pt.ipp.estgf.tourguide.Classes.GPSTracker;
 import pt.ipp.estgf.tourguide.Classes.Local;
 import pt.ipp.estgf.tourguide.Fragments.FragmentMap;
 import pt.ipp.estgf.tourguide.Fragments.LocalMapFragment;
@@ -31,8 +41,8 @@ import pt.ipp.estgf.tourguide.Gestores.GestorLocaisInteresse;
 import pt.ipp.estgf.tourguide.Interfaces.GestorADT;
 import pt.ipp.estgf.tourguide.R;
 
-public class InformacaoLocal extends AppCompatActivity {
-
+public class InformacaoLocal extends AppCompatActivity implements LocationListener {
+    View va;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +84,13 @@ public class InformacaoLocal extends AppCompatActivity {
         ft.commit();
 
         Button buttonEditLocal = (Button) findViewById(R.id.botaoEditLocal);
+
         buttonEditLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final AlertDialog builder = new AlertDialog.Builder(InformacaoLocal.this).create();
                 final LayoutInflater inflater = getLayoutInflater();
-                View va = View.inflate(InformacaoLocal.this, R.layout.layout_edit_local, null);
+                va = View.inflate(InformacaoLocal.this, R.layout.layout_edit_local, null);
 
                 Button btnEditLocal = (Button) va.findViewById(R.id.btn_editLoc);
                 Button btnCancelEditLocal = (Button) va.findViewById(R.id.btn_editCancel);
@@ -88,7 +99,8 @@ public class InformacaoLocal extends AppCompatActivity {
                 final Spinner edtRatLocal = (Spinner) va.findViewById(R.id.spinnerSelectRating);
                 final EditText edtLatitude = (EditText) va.findViewById(R.id.editLatitudeLocal);
                 final EditText edtLongitude = (EditText) va.findViewById(R.id.editLongitudeLocal);
-                final Button obterCoordenadasMapa = (Button) va.findViewById(R.id.obterCoordenadasMapa);
+                final Button obterCoordenadasMapa = (Button) va.findViewById(R.id.editObterCoordenadasMapa);
+                final Button obterCoordenadasAtuais = (Button) va.findViewById(R.id.editObterCoordenadasAtuais);
                 final Spinner edtCategoriaSpinner = (Spinner) va.findViewById(R.id.spinnerSelectCategoria);
 
                 edtNomeCat.setText(local.getNome());
@@ -120,11 +132,34 @@ public class InformacaoLocal extends AppCompatActivity {
                     public void onClick(View v) {
 
                         Intent i = new Intent(InformacaoLocal.this, LocalObterCoordenadas.class);
-                        i.putExtra("idLocal", idLocal);
                         startActivityForResult(i, 1);
 
 
                     }
+                });
+                obterCoordenadasAtuais.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //GPS tracker
+                        GPSTracker gpsTracker = new GPSTracker(InformacaoLocal.this, InformacaoLocal.this);
+                        String stringLatitude = "", stringLongitude = "";
+
+                        if (gpsTracker.canGetLocation()) {
+                            stringLatitude = String.valueOf(gpsTracker.getLatitude());
+                            stringLongitude = String.valueOf(gpsTracker.getLongitude());
+
+                                edtLatitude.setText(stringLatitude);
+                                edtLongitude.setText(stringLongitude);
+
+
+                        } else {
+                            edtLatitude.setText("0.0");
+                            edtLongitude.setText("0.0");
+                            Toast.makeText(getApplicationContext(), "GPS desativado", Toast.LENGTH_SHORT).show();
+                            gpsTracker.showSettingsAlert();
+                        }
+                    }
+
                 });
 
                 //carregar dados e update
@@ -182,8 +217,8 @@ public class InformacaoLocal extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
 
-        EditText edtLatitude = (EditText) findViewById(R.id.editLatitudeLocal);
-        EditText edtLongitude = (EditText) findViewById(R.id.editLongitudeLocal);
+        EditText edtLatitude = (EditText) va.findViewById(R.id.editLatitudeLocal);
+        EditText edtLongitude = (EditText) va.findViewById(R.id.editLongitudeLocal);
 
         if (requestCode == 1) {
             if (resultCode == this.RESULT_OK) {
@@ -195,4 +230,37 @@ public class InformacaoLocal extends AppCompatActivity {
             }
         }
     }
+
+
+
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+        checkGPS();
+        //  Toast.makeText(getApplicationContext(),"LocationChanged",Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        checkGPS();
+        //   Toast.makeText(getApplicationContext(),"StatusChanged",Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void checkGPS(){
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {   }
+
+
+
+
+
 }
