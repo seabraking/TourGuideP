@@ -16,6 +16,7 @@ import android.widget.RemoteViews;
 
 import java.text.DecimalFormat;
 
+import pt.ipp.estgf.tourguide.Activities.InformacaoLocal;
 import pt.ipp.estgf.tourguide.Activities.MainAtivity;
 import pt.ipp.estgf.tourguide.Classes.GPSTracker;
 import pt.ipp.estgf.tourguide.R;
@@ -31,6 +32,7 @@ public class WidgetProvider extends AppWidgetProvider implements LocationListene
     private static String longitude="";
     Context c;
     static String raio="50";
+    static String nomeCat;
     public static String getLat() {
         return lat;
     }
@@ -43,7 +45,9 @@ public class WidgetProvider extends AppWidgetProvider implements LocationListene
         return raio;
     }
 
-
+    public static String getNomeCat() {
+        return nomeCat;
+    }
 
     public void setLat(String lat) {
         this.lat = lat;
@@ -66,6 +70,8 @@ public class WidgetProvider extends AppWidgetProvider implements LocationListene
         for (int i = 0; i < appWidgetIds.length; i++) {
            SharedPreferences shr = PreferenceManager.getDefaultSharedPreferences(context);
             raio = String.valueOf(shr.getString("pref_raio", "15"));
+            nomeCat = shr.getString("pref_categoria", "All");
+
             Intent svcIntent = new Intent(context, WidgetService.class);
             //svcIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
             //svcIntent.setData(Uri.parse(svcIntent .toUri(Intent.URI_INTENT_SCHEME)));

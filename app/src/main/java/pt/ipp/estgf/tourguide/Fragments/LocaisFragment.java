@@ -1,6 +1,7 @@
 package pt.ipp.estgf.tourguide.Fragments;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -47,6 +48,7 @@ import pt.ipp.estgf.tourguide.Gestores.GestorCategorias;
 import pt.ipp.estgf.tourguide.Gestores.GestorLocaisInteresse;
 import pt.ipp.estgf.tourguide.Interfaces.GestorADT;
 import pt.ipp.estgf.tourguide.R;
+import pt.ipp.estgf.tourguide.Widgets.WidgetProvider;
 
 /**
  * Created by bia on 27/11/2015.
@@ -116,7 +118,7 @@ public class LocaisFragment extends ListFragment implements LocationListener{
                 }
             }
         });*/
-
+/*
         spinnerRating.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -134,7 +136,7 @@ public class LocaisFragment extends ListFragment implements LocationListener{
 
             }
         });
-
+*/
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -290,6 +292,10 @@ public class LocaisFragment extends ListFragment implements LocationListener{
                                         Toast.makeText(mContext, "Local adicionado!", Toast.LENGTH_SHORT).show();
                                         mLocais.add(newLocal);
                                         mAdapter.notifyDataSetChanged();
+                             /*           Intent intent = new Intent(mContext,WidgetProvider.class);
+                                        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                                        //intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+                                        mContext.sendBroadcast(intent);*/
                                         builder.dismiss();
                                     } else {
                                         Toast.makeText(mContext, "SQL - Erro ao adicionar local!", Toast.LENGTH_SHORT).show();

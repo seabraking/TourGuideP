@@ -36,6 +36,8 @@ public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFact
     String stringLatitude = "", stringLongitude = "";
     GPSTracker gpsTracker;
     Double raio;
+    String categoria;
+
     public AppWidgetViewsFactory(Context ctxt, Intent intent) {
         this.context = ctxt;
 		appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
@@ -49,32 +51,30 @@ public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFact
         GestorLocaisInteresse gestor = new GestorLocaisInteresse();
         ArrayList<Local>tmpList = new ArrayList<>();
 
-        int nrlocaisAdded = 0;
         tmpList.addAll(gestor.listar(context));
         for(int i = 0; i<tmpList.size();i++){
 
 
             //     Toast.makeText(context,String.valueO
             raio = Double.parseDouble(WidgetProvider.getRaio());
+            categoria = WidgetProvider.getNomeCat();
             Double lat1 = Double.parseDouble(WidgetProvider.getLat());
             Double long1 = Double.parseDouble(WidgetProvider.getLong());
 
             Double lat2 = Double.parseDouble(tmpList.get(i).getCoordenadas().getLatitude());
             Double long2 = Double.parseDouble(tmpList.get(i).getCoordenadas().getLongitude());
 
-            SharedPreferences shr = PreferenceManager.getDefaultSharedPreferences(context);
-            String categoria, nrLocais, frequencia;
-            nrLocais= (shr.getString("pref_nr_locais", "15"));
-            categoria= (shr.getString("pref_categoria", "All"));
-           // atualizacao= (shr.getString("pref_update", "15"));
-
-            Double distance =  distance(lat1, long1, lat2, long2);
-            String nomeCat = tmpList.get(i).getCategoria().getNome();
-           if(distance<raio){
-               if(!categoria.equals("All") && categoria==nomeCat){
-                   arrayList.add(tmpList.get(i));
-               }
+           Double distance =  distance(lat1, long1, lat2, long2);
+            if(!categoria.equals("All") && categoria.equals(tmpList.get(i).getCategoria().getNome())) {
+                arrayList.add(tmpList.get(i));
+            } else if(categoria.equals("All")){
+                {
+                    if(distance<raio){
+                        arrayList.add(tmpList.get(i));
+                    }
+                }
             }
+
 
         }
     }
@@ -155,14 +155,19 @@ public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFact
         GestorLocaisInteresse gestor = new GestorLocaisInteresse();
         ArrayList<Local>tmpList = new ArrayList<>();
 
+        SharedPreferences shr = PreferenceManager.getDefaultSharedPreferences(context);
         tmpList.addAll(gestor.listar(context));
+        raio = Double.parseDouble(shr.getString("pref_raio", "15"));
+        categoria = shr.getString("pref_categoria", "All");
+        int nrLocais = Integer.parseInt(shr.getString("pref_nr_locais", "5"));
+        int nrLocaisAdded = 0;
         for(int i = 0; i<tmpList.size();i++){
 
 
             //     Toast.makeText(context,String.valueO
            // raio = Double.parseDouble(WidgetProvider.getRaio());
-            SharedPreferences shr = PreferenceManager.getDefaultSharedPreferences(context);
-            raio = Double.parseDouble(shr.getString("pref_raio", "15"));
+
+
             Double lat1 = Double.parseDouble(WidgetProvider.getLat());
             Double long1 = Double.parseDouble(WidgetProvider.getLong());
 
@@ -170,9 +175,26 @@ public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFact
             Double long2 = Double.parseDouble(tmpList.get(i).getCoordenadas().getLongitude());
 
             Double distance =  distance(lat1, long1, lat2, long2);
-            if(distance<raio){
-                arrayList.add(tmpList.get(i));
+            if(categoria.equals("All")){
+                if(distance<raio){
+                    if(nrLocais>nrLocaisAdded)
+                    {
+                        arrayList.add(tmpList.get(i));
+                        nrLocaisAdded++;
+                    }
+
+                }
+            } else if(categoria.equals(tmpList.get(i).getCategoria().getNome())){
+                if(nrLocais>nrLocaisAdded)
+                {
+                    arrayList.add(tmpList.get(i));
+                    nrLocaisAdded++;
+                }
+
             }
+
+
+
 
         }
 

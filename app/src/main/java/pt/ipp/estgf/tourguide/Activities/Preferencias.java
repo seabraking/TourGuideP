@@ -28,6 +28,7 @@ public class Preferencias extends PreferenceFragment {
         cats.addAll(gCats.listar(getActivity()));
         ArrayList<String> catsString = new ArrayList<String>();
         int i;
+        catsString.add("All");
         for(i=0;i<cats.size();i++){
             catsString.add(cats.get(i).getNome());
         }
