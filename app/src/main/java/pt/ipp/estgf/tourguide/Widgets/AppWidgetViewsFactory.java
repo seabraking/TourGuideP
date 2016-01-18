@@ -49,6 +49,7 @@ public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFact
         GestorLocaisInteresse gestor = new GestorLocaisInteresse();
         ArrayList<Local>tmpList = new ArrayList<>();
 
+        int nrlocaisAdded = 0;
         tmpList.addAll(gestor.listar(context));
         for(int i = 0; i<tmpList.size();i++){
 
@@ -61,9 +62,18 @@ public class AppWidgetViewsFactory implements RemoteViewsService.RemoteViewsFact
             Double lat2 = Double.parseDouble(tmpList.get(i).getCoordenadas().getLatitude());
             Double long2 = Double.parseDouble(tmpList.get(i).getCoordenadas().getLongitude());
 
-           Double distance =  distance(lat1, long1, lat2, long2);
+            SharedPreferences shr = PreferenceManager.getDefaultSharedPreferences(context);
+            String categoria, nrLocais, frequencia;
+            nrLocais= (shr.getString("pref_nr_locais", "15"));
+            categoria= (shr.getString("pref_categoria", "All"));
+           // atualizacao= (shr.getString("pref_update", "15"));
+
+            Double distance =  distance(lat1, long1, lat2, long2);
+            String nomeCat = tmpList.get(i).getCategoria().getNome();
            if(distance<raio){
-               arrayList.add(tmpList.get(i));
+               if(!categoria.equals("All") && categoria==nomeCat){
+                   arrayList.add(tmpList.get(i));
+               }
             }
 
         }
