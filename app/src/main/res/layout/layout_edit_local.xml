@@ -111,13 +111,27 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/obterCoordenadasMapa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner"
-        android:text="Obter Coordenadas no mapa"
-        android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/editObterCoordenadasMapa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_corner"
+            android:text="Obter no mapa" />
+
+        <Button
+            android:id="@+id/editObterCoordenadasAtuais"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_corner"
+            android:text="Obter atuais" />
+    </LinearLayout>
+
 
 
     <TextView

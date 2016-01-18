@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
 import android.media.Rating;
 import android.os.Bundle;
 import android.preference.DialogPreference;
@@ -39,6 +41,7 @@ import pt.ipp.estgf.tourguide.Adapter.LocalAdapter;
 import pt.ipp.estgf.tourguide.Adapter.SearchableLocalAdapter;
 import pt.ipp.estgf.tourguide.Classes.Categoria;
 import pt.ipp.estgf.tourguide.Classes.Coordenadas;
+import pt.ipp.estgf.tourguide.Classes.GPSTracker;
 import pt.ipp.estgf.tourguide.Classes.Local;
 import pt.ipp.estgf.tourguide.Gestores.GestorCategorias;
 import pt.ipp.estgf.tourguide.Gestores.GestorLocaisInteresse;
@@ -48,10 +51,11 @@ import pt.ipp.estgf.tourguide.R;
 /**
  * Created by bia on 27/11/2015.
  */
-public class LocaisFragment extends ListFragment {
+public class LocaisFragment extends ListFragment implements LocationListener{
     private Context mContext;
     private SearchableLocalAdapter mAdapter;
     private ArrayList<Local> mLocais = new ArrayList<Local>();
+    View va;
 
 
 
@@ -203,7 +207,7 @@ public class LocaisFragment extends ListFragment {
 
                         final AlertDialog builder = new AlertDialog.Builder(mContext).create();
                         final LayoutInflater inflater = getLayoutInflater(savedInstanceState);
-                        View va = View.inflate(mContext, R.layout.layout_add_local, null);
+                        va = View.inflate(mContext, R.layout.layout_add_local, null);
 
                         Button btnAddLocal = (Button) va.findViewById(R.id.btn_addLoc);
                         Button btnCancelAddLocal = (Button) va.findViewById(R.id.btn_addCancel);
@@ -212,7 +216,8 @@ public class LocaisFragment extends ListFragment {
                         final Spinner addRatLocal = (Spinner) va.findViewById(R.id.spinnerSelectRating);
                         final EditText addLatitude = (EditText) va.findViewById(R.id.addLatitudeLocal);
                         final EditText addLongitude = (EditText) va.findViewById(R.id.addLongitudeLocal);
-                        final Button obterCoordenadasMapa = (Button) va.findViewById(R.id.obterCoordenadasMapa);
+                        final Button obterCoordenadasMapa = (Button) va.findViewById(R.id.addObterCoordenadasMapa);
+                        final Button obterCoordenadasAtual = (Button) va.findViewById(R.id.addObterCoordenadasAtuais);
                         final Spinner addCategoriaSpinner = (Spinner) va.findViewById(R.id.spinnerSelectCategoria);
 
                         //RATING BAR
@@ -239,6 +244,29 @@ public class LocaisFragment extends ListFragment {
                                 startActivityForResult(i, 1);
 
 
+                            }
+                        });
+                        obterCoordenadasAtual.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //GPS tracker
+                                GPSTracker gpsTracker = new GPSTracker(getContext(),LocaisFragment.this);
+                                String stringLatitude = "", stringLongitude = "";
+
+                                if (gpsTracker.canGetLocation()) {
+                                    stringLatitude = String.valueOf(gpsTracker.getLatitude());
+                                    stringLongitude = String.valueOf(gpsTracker.getLongitude());
+
+                                    addLatitude.setText(stringLatitude);
+                                    addLongitude.setText(stringLongitude);
+
+
+                                } else {
+                                    addLatitude.setText("0.0");
+                                    addLongitude.setText("0.0");
+                                    Toast.makeText(getContext(), "GPS desativado", Toast.LENGTH_SHORT).show();
+                                    gpsTracker.showSettingsAlert();
+                                }
                             }
                         });
 
@@ -358,4 +386,39 @@ public class LocaisFragment extends ListFragment {
         mLocais.addAll(gestorLocaisInteresse.listar(mContext));
         mAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        EditText lat = (EditText) va.findViewById(R.id.addLatitudeLocal);
+        EditText lon = (EditText) va.findViewById(R.id.addLongitudeLocal);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == getActivity().RESULT_OK) {
+                String latAdd = data.getStringExtra("latitude");
+                String lonAdd = data.getStringExtra("longitude");
+                lat.setText(latAdd);
+                lon.setText(lonAdd);
+            }
+        }
+    }
+
 }
