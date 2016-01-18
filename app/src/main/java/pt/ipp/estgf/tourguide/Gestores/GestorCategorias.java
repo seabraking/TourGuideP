@@ -126,7 +126,7 @@ public class GestorCategorias implements GestorADT<Categoria> {
     public ArrayList<Categoria> obterPrincipaisCategorias(Context context){
         ArrayList<Categoria> categorias = new ArrayList<>();
         try {
-            String categoriasSQL = "SELECT category_name,count(*) AS NUM FROM tbl_poi GROUP BY category_name";
+            String categoriasSQL = "SELECT category_name,count(*) AS NUM FROM tbl_poi GROUP BY category_name ORDER BY NUM DESC";
             SQLiteConnect dbHelperAux = new SQLiteConnect(context);
             SQLiteDatabase dbAux = dbHelperAux.getWritableDatabase();
             Cursor cursorAux = dbAux.rawQuery(categoriasSQL, null);

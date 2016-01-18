@@ -15,6 +15,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+
 import pt.ipp.estgf.tourguide.Fragments.ObterCoordenadasFragment;
 import pt.ipp.estgf.tourguide.R;
 
@@ -37,11 +38,6 @@ public class LocalObterCoordenadas extends FragmentActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.idMapa, newFragment);
         ft.commit();
-
-
-
-
-
 
     }
 
